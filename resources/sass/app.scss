@@ -1,0 +1,25 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+// Variables
+@import 'variables';
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.center-all {
+  align-items: center;
+  display: flex;
+  //justify-content: center;
+  min-height: 100vh;
+  flex-wrap: wrap;
+  text-align: center;
+  padding: 20px;
+}
+
+.btn-group-lg > .btn, .btn-lg {
+  padding: .3rem .8rem;
+}
