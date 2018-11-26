@@ -38,10 +38,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string|null $token
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereIsExpert($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereToken($value)
+ * @property int $expert_type
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereExpertType($value)
  */
 class User extends Authenticatable
 {
     use Notifiable;
+
+    const EXPERT_TYPE_COM = 0;
+    const EXPERT_TYPE_EXP = 1;
 
     /**
      * The attributes that are mass assignable.

@@ -34,6 +34,10 @@
                             <td>{{ $report->to }}</td>
                             <td class="justify-content-center">
                                 <div class="btn-group btn-group-sm">
+                                    <a href="{{ route('admin.report.show', ['id' => $report->id]) }}"
+                                       class="btn btn-success" role="button" target="_blank">
+                                        <span class="oi oi-eye" title="Show report" aria-hidden="true"></span>
+                                    </a>
                                     <a href="{{ route('admin.report.edit', ['id' => $report->id]) }}"
                                        class="btn btn-warning" role="button">
                                         <span class="oi oi-pencil" title="Edit report" aria-hidden="true"></span>

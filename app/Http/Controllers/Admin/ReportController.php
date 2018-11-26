@@ -110,4 +110,19 @@ class ReportController extends Controller
 
         return redirect()->route('admin.report.index');
     }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function show(Request $request, $id)
+    {
+        $report = Report::findOrFail($id);
+
+        return view('admin.report.show', [
+            'report' => $report
+        ]);
+    }
 }

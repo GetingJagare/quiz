@@ -25,9 +25,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Mark whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Mark whereUserId($value)
  * @mixin \Eloquent
+ * @property int $expert_type
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Mark whereExpertType($value)
  */
 class Mark extends Model
 {
+    const EXPERT_TYPE_COM = 0;
+    const EXPERT_TYPE_EXP = 1;
+    
     protected $fillable = [
         'user_id',
         'report_id',

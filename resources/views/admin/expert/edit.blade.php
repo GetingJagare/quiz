@@ -32,6 +32,29 @@
                                 </div>
                             </div>
 
+                            <div class="form-group row">
+                                <label for="expert_type" class="col-md-4 col-form-label text-md-right">Жюри или
+                                    эксперт</label>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="expert_type"
+                                               id="expert_type0"
+                                               value="0" {{ $expert->expert_type == 0 ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="expert_type0">
+                                            Жюри
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="expert_type"
+                                               id="expert_type1" {{ $expert->expert_type == 1 ? 'checked' : '' }}
+                                               value="1">
+                                        <label class="form-check-label" for="expert_type1">
+                                            Эксперт
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">

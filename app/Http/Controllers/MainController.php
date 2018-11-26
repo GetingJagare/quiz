@@ -104,6 +104,7 @@ class MainController extends Controller
         $mark->worth = $request->get('worth');
         $mark->representation = $request->get('representation');
         $mark->efficiency = $request->get('efficiency');
+        $mark->expert_type = $user->expert_type;
         $mark->save();
 
         \Session::put('result', true);

@@ -42,7 +42,8 @@ class ExpertController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required|string'
+            'name' => 'required|string',
+            'expert_type' => 'required|integer|in:0,1'
         ];
 
         $this->validate($request, $rules);
@@ -53,6 +54,7 @@ class ExpertController extends Controller
         $user->filial = "";
         $user->name = $request->get('name');
         $user->is_expert = true;
+        $user->expert_type = $request->get('expert_type');
 
         do {
             $token = Str::random(24);
@@ -88,12 +90,14 @@ class ExpertController extends Controller
         $expert = User::findOrFail($id);
 
         $rules = [
-            'name' => 'required|string'
+            'name' => 'required|string',
+            'expert_type' => 'required|integer|in:0,1'
         ];
 
         $this->validate($request, $rules);
 
         $expert->name = $request->get('name');
+        $expert->expert_type = $request->get('expert_type');
         $expert->save();
 
         return redirect()->route('admin.expert.index');

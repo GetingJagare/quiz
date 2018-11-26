@@ -11,6 +11,7 @@
                         <th width="50">ID</th>
                         <th>ФИО</th>
                         <th>Ссылка</th>
+                        <th width="180">Жюри или эксперт</th>
                         <th class="text-center" width="80">
                             <a class="btn btn-sm btn-success" href="{{ route('admin.expert.create') }}"
                                role="button"><span class="oi oi-plus" title="Create expert"
@@ -24,6 +25,7 @@
                             <td>{{ $expert->id }}</td>
                             <td>{{ $expert->name }}</td>
                             <td>{{ route('signin.byToken', $expert->token) }}</td>
+                            <td>{{ $expert->expert_type == 0 ? "Жюри" : "Эксперт" }}</td>
                             <td class="justify-content-center">
                                 <div class="btn-group btn-group-sm">
                                     <a href="{{ route('admin.expert.edit', ['id' => $expert->id]) }}"

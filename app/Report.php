@@ -101,40 +101,46 @@ class Report extends Model
     /**
      * @return mixed
      */
-    public function getAverageNovelty()
+    public function getAverageNovelty($type = 0)
     {
-        return $this->expertMarks()->average('novelty');
+        return $this->expertMarks()->whereExpertType($type)->average('novelty');
     }
 
     /**
      * @return mixed
      */
-    public function getAverageStudy()
+    public function getAverageStudy($type = 0)
     {
-        return $this->expertMarks()->average('study');
+        return $this->expertMarks()->whereExpertType($type)->average('study');
     }
 
     /**
      * @return mixed
      */
-    public function getAverageWorth()
+    public function getAverageWorth($type = 0)
     {
-        return $this->expertMarks()->average('worth');
+        return $this->expertMarks()->whereExpertType($type)->average('worth');
     }
 
     /**
      * @return mixed
      */
-    public function getAverageRepresentation()
+    public function getAverageRepresentation($type = 0)
     {
-        return $this->expertMarks()->average('representation');
+        return $this->expertMarks()->whereExpertType($type)->average('representation');
     }
 
     /**
      * @return mixed
      */
-    public function getAverageEfficiency()
+    public function getAverageEfficiency($type = 0)
     {
-        return $this->expertMarks()->average('efficiency');
+        return $this->expertMarks()->whereExpertType($type)->average('efficiency');
+    }
+
+    public function getTotalAverage($type = 0)
+    {
+        return ($this->getAverageNovelty($type) + $this->getAverageStudy($type) + $this->getAverageWorth($type) +
+                $this->getAverageRepresentation($type) + $this->getAverageEfficiency($type)) / 5;
     }
 }

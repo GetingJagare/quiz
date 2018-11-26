@@ -16,7 +16,7 @@ Route::group([
 ], function () {
     Route::get('/', 'MainController@index')->name('main');
 
-    Route::get('/result', 'MainController@result')->name('result');
+    //Route::get('/result', 'MainController@result')->name('result');
 
     Route::post('/mark/{id}', 'MainController@mark')->name('mark');
     Route::post('/markExpert/{id}', 'MainController@markExpert')->name('markExpert');
@@ -32,7 +32,8 @@ Route::group([
         Route::get('/report', 'ReportController@index')->name('report.index');
         Route::get('/report/create', 'ReportController@create')->name('report.create');
         Route::post('/report', 'ReportController@store')->name('report.store');
-        Route::get('/report/{id}', 'ReportController@edit')->name('report.edit');
+        Route::get('/report/{id}', 'ReportController@show')->name('report.show');
+        Route::get('/report/{id}/edit', 'ReportController@edit')->name('report.edit');
         Route::post('/report/{id}', 'ReportController@update')->name('report.update');
         Route::get('/report/{id}/delete', 'ReportController@delete')->name('report.delete');
 
