@@ -9,25 +9,25 @@
                 <h3>{{ $report->position }}, {{ $report->filial }}</h3>
                 <br/>
                 <h4>Оценки конкурсной комиссии</h4>
-                <p><b>Новизна</b>: {{ number_format($report->getAverageNovelty(), 1) }}</p>
-                <p><b>Степень проработки</b>: {{ number_format($report->getAverageStudy(), 1) }}</p>
-                <p><b>Практическая ценность и актуальность</b>: {{ number_format($report->getAverageWorth(), 1) }}</p>
-                <p><b>Представление доклада</b>: {{ number_format($report->getAverageRepresentation(), 1) }}</p>
-                <p><b>Экономическая эффективность</b>: {{ number_format($report->getAverageEfficiency(), 1) }}</p>
-                <p><b>Средняя оценка</b>: {{ number_format($report->getTotalAverage(), 1) }}</p>
+                <p><b>Новизна</b>: {{ $report->getAverageNovelty() }}</p>
+                <p><b>Степень проработки</b>: {{ $report->getAverageStudy() }}</p>
+                <p><b>Практическая ценность и актуальность</b>: {{ $report->getAverageWorth() }}</p>
+                <p><b>Представление доклада</b>: {{ $report->getAverageRepresentation() }}</p>
+                <p><b>Экономическая эффективность</b>: {{ $report->getAverageEfficiency() }}</p>
+                <p><b>Средняя оценка</b>: {{ $report->getTotalAverage() }}</p>
                 <br/>
                 <h4>Оценки экспертов</h4>
-                <p><b>Новизна</b>: {{ number_format($report->getAverageNovelty(1), 1) }}</p>
-                <p><b>Степень проработки</b>: {{ number_format($report->getAverageStudy(1), 1) }}</p>
-                <p><b>Практическая ценность и актуальность</b>: {{ number_format($report->getAverageWorth(1), 1) }}</p>
-                <p><b>Представление доклада</b>: {{ number_format($report->getAverageRepresentation(1), 1) }}</p>
-                <p><b>Экономическая эффективность</b>: {{ number_format($report->getAverageEfficiency(1), 1) }}</p>
-                <p><b>Средняя оценка</b>: {{ number_format($report->getTotalAverage(1), 1) }}</p>
+                <p><b>Новизна</b>: {{ $report->getAverageNovelty(1) }}</p>
+                <p><b>Степень проработки</b>: {{ $report->getAverageStudy(1) }}</p>
+                <p><b>Практическая ценность и актуальность</b>: {{ $report->getAverageWorth(1) }}</p>
+                <p><b>Представление доклада</b>: {{ $report->getAverageRepresentation(1) }}</p>
+                <p><b>Экономическая эффективность</b>: {{ $report->getAverageEfficiency(1) }}</p>
+                <p><b>Средняя оценка</b>: {{ $report->getTotalAverage(1) }}</p>
                 <br/>
                 <h4>Средняя оценка жюри и
-                    экспертов: {{ number_format(($report->getTotalAverage() + $report->getTotalAverage(1))/2, 1) }}</h4>
+                    экспертов: {{ $report->getAllTotalAverage() }}</h4>
                 <br/>
-                <h4>Оценка зрителей: {{ number_format($report->getAverageMark(), 1) }}</h4>
+                <h4>Оценка зрителей: {{ $report->getAverageMark() }}</h4>
             </div>
         </div>
     </div>

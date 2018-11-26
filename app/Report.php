@@ -101,7 +101,7 @@ class Report extends Model
      */
     public function getAverageMark()
     {
-        return $this->marks()->average('mark');
+        return $this->hasMarks() ? number_format($this->marks()->average('mark'), 1) : "Нет проголосовавших";
     }
 
     /**
@@ -109,7 +109,7 @@ class Report extends Model
      */
     public function getAverageNovelty($type = 0)
     {
-        return $this->expertMarks()->whereExpertType($type)->average('novelty');
+        return $this->hasExpertMarks($type) ? number_format($this->expertMarks()->whereExpertType($type)->average('novelty'), 1) : "Нет проголосовавших";
     }
 
     /**
@@ -117,7 +117,7 @@ class Report extends Model
      */
     public function getAverageStudy($type = 0)
     {
-        return $this->expertMarks()->whereExpertType($type)->average('study');
+        return $this->hasExpertMarks($type) ? number_format($this->expertMarks()->whereExpertType($type)->average('study'), 1) : "Нет проголосовавших";
     }
 
     /**
@@ -125,7 +125,7 @@ class Report extends Model
      */
     public function getAverageWorth($type = 0)
     {
-        return $this->expertMarks()->whereExpertType($type)->average('worth');
+        return $this->hasExpertMarks($type) ? number_format($this->expertMarks()->whereExpertType($type)->average('worth'), 1) : "Нет проголосовавших";
     }
 
     /**
@@ -133,7 +133,7 @@ class Report extends Model
      */
     public function getAverageRepresentation($type = 0)
     {
-        return $this->expertMarks()->whereExpertType($type)->average('representation');
+        return $this->hasExpertMarks($type) ? number_format($this->expertMarks()->whereExpertType($type)->average('representation'), 1) : "Нет проголосовавших";
     }
 
     /**
@@ -141,12 +141,50 @@ class Report extends Model
      */
     public function getAverageEfficiency($type = 0)
     {
-        return $this->expertMarks()->whereExpertType($type)->average('efficiency');
+        return $this->hasExpertMarks($type) ? number_format($this->expertMarks()->whereExpertType($type)->average('efficiency'), 1) : "Нет проголосовавших";
     }
 
+    /**
+     * @param int $type
+     * @return string
+     */
     public function getTotalAverage($type = 0)
     {
-        return ($this->getAverageNovelty($type) + $this->getAverageStudy($type) + $this->getAverageWorth($type) +
-                $this->getAverageRepresentation($type) + $this->getAverageEfficiency($type)) / 5;
+        return $this->hasExpertMarks($type) ? number_format(($this->getAverageNovelty($type) + $this->getAverageStudy($type) + $this->getAverageWorth($type) +
+                $this->getAverageRepresentation($type) + $this->getAverageEfficiency($type)) / 5, 1) : "Нет проголосовавших";
+    }
+
+    /**
+     * @param int $type
+     * @return bool
+     */
+    public function hasMarks()
+    {
+        return (bool)$this->marks()->count();
+    }
+
+    /**
+     * @param int $type
+     * @return bool
+     */
+    public function hasExpertMarks($type = 0)
+    {
+        return (bool)$this->expertMarks()->whereExpertType($type)->count();
+    }
+
+    /**
+     * @return string
+     */
+    public function getAllTotalAverage()
+    {
+        if ($this->hasExpertMarks() && $this->hasExpertMarks(1)) {
+            return number_format(((float)$this->getTotalAverage() + (float)$this->getTotalAverage(1)) / 2, 1);
+        } elseif ($this->hasExpertMarks()) {
+            return $this->getTotalAverage();
+        } elseif ($this->hasExpertMarks(1)) {
+            return $this->getTotalAverage(1);
+        } else {
+            return "Нет проголосовавших";
+        }
     }
 }

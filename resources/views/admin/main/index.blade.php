@@ -31,9 +31,9 @@
                             <td class="align-middle">{{ $report->reporter }}<br/><b>{{ $report->name }}</b></td>
                             <td class="align-middle">{{ $report->position }}</td>
                             <td class="align-middle">{{ $report->filial }}</td>
-                            <td class="align-middle">{{ number_format($report->getTotalAverage(0), 1) }}</td>
-                            <td class="align-middle">{{ number_format($report->getTotalAverage(1), 1) }}</td>
-                            <td class="align-middle">{{ number_format($report->getAverageMark(), 1) }}</td>
+                            <td class="align-middle">{{ $report->getTotalAverage(0) }}</td>
+                            <td class="align-middle">{{ $report->getTotalAverage(1) }}</td>
+                            <td class="align-middle">{{ $report->getAverageMark() }}</td>
                         </tr>
                     @empty
                         <tr>
