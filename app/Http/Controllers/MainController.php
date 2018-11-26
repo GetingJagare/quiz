@@ -27,7 +27,7 @@ class MainController extends Controller
                 ->where('to', '>=', $now->format('H:i:s'))
                 ->first();
 
-            if ($report->hasMark($user) || $report->hasExpertMark($user)) {
+            if ($report && ($report->hasMark($user) || $report->hasExpertMark($user))) {
                 $report = null;
             }
         }
