@@ -31,6 +31,8 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Mark[] $marks
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\MarkExpert[] $expertMarks
+ * @property int $active
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Report whereActive($value)
  */
 class Report extends Model
 {
@@ -46,6 +48,10 @@ class Report extends Model
     protected $dates = [
         'created_at',
         'updated_at'
+    ];
+
+    protected $casts = [
+        'active' => 'boolean'
     ];
 
     /**

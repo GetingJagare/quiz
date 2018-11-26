@@ -38,6 +38,12 @@
                                        class="btn btn-success" role="button" target="_blank">
                                         <span class="oi oi-eye" title="Show report" aria-hidden="true"></span>
                                     </a>
+                                    <a href="{{ route('admin.report.toggle', ['id' => $report->id]) }}"
+                                       class="btn {{ $report->active ? 'btn-success' : 'btn-danger' }}" role="button">
+                                        <span class="oi {{ $report->active ? 'oi-check' : 'oi-x' }}"
+                                              title="{{ $report->active ? 'Disable' : 'Enable' }} report"
+                                              aria-hidden="true"></span>
+                                    </a>
                                     <a href="{{ route('admin.report.edit', ['id' => $report->id]) }}"
                                        class="btn btn-warning" role="button">
                                         <span class="oi oi-pencil" title="Edit report" aria-hidden="true"></span>

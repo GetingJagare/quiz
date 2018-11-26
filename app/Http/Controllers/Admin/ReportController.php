@@ -125,4 +125,19 @@ class ReportController extends Controller
             'report' => $report
         ]);
     }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function toggle(Request $request, $id)
+    {
+        $report = Report::findOrFail($id);
+
+        $report->active = !$report->active;
+        $report->save();
+
+        return redirect()->route('admin.report.index');
+    }
 }

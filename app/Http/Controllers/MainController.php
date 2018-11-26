@@ -25,6 +25,7 @@ class MainController extends Controller
             $now = \Carbon\Carbon::now();
             $report = Report::where('from', '<=', $now->format('H:i:s'))
                 ->where('to', '>=', $now->format('H:i:s'))
+                ->whereActive(true)
                 ->first();
 
             if ($report && ($report->hasMark($user) || $report->hasExpertMark($user))) {
@@ -41,7 +42,12 @@ class MainController extends Controller
 
     public function mark(Request $request, $id)
     {
-        $report = Report::findOrFail($id);
+        $now = \Carbon\Carbon::now();
+
+        $report = Report::where('from', '<=', $now->format('H:i:s'))
+        ->where('to', '>=', $now->format('H:i:s'))
+        ->whereActive(true)
+        ->findOrFail($id);
 
         $rules = [
             'mark' => 'required|in:0,1,2,3,4,5'
@@ -76,7 +82,12 @@ class MainController extends Controller
      */
     public function markExpert(Request $request, $id)
     {
-        $report = Report::findOrFail($id);
+        $now = \Carbon\Carbon::now();
+
+        $report = Report::where('from', '<=', $now->format('H:i:s'))
+            ->where('to', '>=', $now->format('H:i:s'))
+            ->whereActive(true)
+            ->findOrFail($id);
 
         $rules = [
             'novelty' => 'required|in:0,1,2,3,4,5',
