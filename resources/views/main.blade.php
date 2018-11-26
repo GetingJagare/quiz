@@ -121,12 +121,12 @@
         @elseif($result)
             <div style="margin: 0 auto;">
                 <h1>Спасибо за оценку!</h1>
-                <p><a href="{{ route('result') }}">Посмотреть результаты</a></p>
+                {{--<p><a href="{{ route('result') }}">Посмотреть результаты</a></p>--}}
             </div>
         @else
             <div style="margin: 0 auto;">
                 <h1>Нет активных голосований</h1>
-                <p><a href="{{ route('result') }}">Посмотреть результаты</a></p>
+                {{--<p><a href="{{ route('result') }}">Посмотреть результаты</a></p>--}}
             </div>
         @endif
     </div>
