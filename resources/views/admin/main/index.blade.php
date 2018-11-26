@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="row justify-content-center">
+        <div class="row">
             <div>
                 <table class="table table-bordered text-center tablesorter">
                     <thead>
