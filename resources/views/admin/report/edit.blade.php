@@ -79,7 +79,7 @@
                                 <div class="col-md-6">
                                     <input id="from" type="time"
                                            class="form-control{{ $errors->has('from') ? ' is-invalid' : '' }}"
-                                           name="from" value="{{ old('from') ?? $report->from }}" required>
+                                           name="from" value="{{ old('from') ?? substr_replace($report->from ,"", -3) }}" required>
                                     @if ($errors->has('from'))
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('from') }}</strong>
@@ -93,7 +93,7 @@
                                 <div class="col-md-6">
                                     <input id="to" type="time"
                                            class="form-control{{ $errors->has('to') ? ' is-invalid' : '' }}"
-                                           name="to" value="{{ old('to') ?? $report->to }}" required>
+                                           name="to" value="{{ old('from') ?? substr_replace($report->to ,"", -3) }}" required>
                                     @if ($errors->has('to'))
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('to') }}</strong>
