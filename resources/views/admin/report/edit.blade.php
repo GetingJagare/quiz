@@ -15,7 +15,7 @@
 
                     <div class="card-body">
                         <form method="POST"
-                              action="@if($report->id){{ route('admin.report.edit', $report->id) }}@else{{ route('admin.report.store') }}@endif">
+                              action="@if($report->id){{ route('admin.report.update', $report->id) }}@else{{ route('admin.report.store') }}@endif">
                             @csrf
 
                             <div class="form-group row">
