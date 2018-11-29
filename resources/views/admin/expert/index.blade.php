@@ -9,7 +9,7 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                         <tr>
-                            <th width="50">ID</th>
+                            {{--<th width="50">ID</th>--}}
                             <th>ФИО</th>
                             <th>Ссылка</th>
                             <th width="180">Жюри или эксперт</th>
@@ -23,7 +23,7 @@
                         <tbody>
                         @forelse($experts as $expert)
                             <tr>
-                                <td>{{ $expert->id }}</td>
+                                {{--<td>{{ $expert->id }}</td>--}}
                                 <td>{{ $expert->name }}</td>
                                 <td>{{ route('signin.byToken', $expert->token) }}</td>
                                 <td>{{ $expert->expert_type == 0 ? "Жюри" : "Эксперт" }}</td>

@@ -13,7 +13,7 @@ class ReportController extends Controller
      */
     public function index(Request $request)
     {
-        $reports = Report::orderBy('from')
+        $reports = Report::orderBy('to')
             ->get();
 
         return view('admin.report.index', [

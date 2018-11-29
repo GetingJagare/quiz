@@ -57,7 +57,7 @@ class ExpertController extends Controller
         $user->expert_type = $request->get('expert_type');
 
         do {
-            $token = Str::random(24);
+            $token = Str::random(6);
         }while(User::whereToken($token)->count());
 
         $user->token = $token;

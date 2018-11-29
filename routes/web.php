@@ -50,6 +50,6 @@ Route::group([
 Route::get('/signin', 'SignInController@index')->name('signin');
 Route::post('/signin', 'SignInController@store')->name('signup');
 
-Route::get('/signin/{token}', 'SignInController@byToken')->name('signin.byToken');
+Route::get('/s/{token}', 'SignInController@byToken')->name('signin.byToken');
 
 Auth::routes(['register' => false]);
