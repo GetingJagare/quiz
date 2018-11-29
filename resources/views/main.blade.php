@@ -285,81 +285,26 @@
                         </div>
                     </div>
                     <script type="text/javascript">
-                        document.getElementsByName('novelty').forEach(function (element, index) {
-                            document.getElementById("novelty" + index).parentNode.addEventListener("click", function () {
-                                document.getElementsByName('novelty').forEach(function (el, ind) {
-                                    if (ind !== index) {
-                                        el.parentNode.classList.remove('active');
-                                        el.parentNode.classList.remove('btn-success');
-                                        el.parentNode.classList.add('btn-info');
-                                    } else {
-                                        el.parentNode.classList.add('active');
-                                        el.parentNode.classList.add('btn-success');
-                                        el.parentNode.classList.remove('btn-info');
-                                    }
-                                });
+                        var arr = ['novelty', 'study', 'representation', 'worth', 'efficiency'];
+                        for (i = 0; i < arr.length; i++) {
+                            document.getElementsByName(arr[i]).forEach(function (element, index) {
+                                !function (name, i) {
+                                    document.getElementById(name + i).parentNode.addEventListener("click", function () {
+                                        document.getElementsByName(name).forEach(function (el, ind) {
+                                            if (ind !== index) {
+                                                el.parentNode.classList.remove('active');
+                                                el.parentNode.classList.remove('btn-success');
+                                                el.parentNode.classList.add('btn-info');
+                                            } else {
+                                                el.parentNode.classList.add('active');
+                                                el.parentNode.classList.add('btn-success');
+                                                el.parentNode.classList.remove('btn-info');
+                                            }
+                                        });
+                                    });
+                                }(arr[i], index);
                             });
-                        });
-                        document.getElementsByName('study').forEach(function (element, index) {
-                            document.getElementById("study" + index).parentNode.addEventListener("click", function () {
-                                document.getElementsByName('study').forEach(function (el, ind) {
-                                    if (ind !== index) {
-                                        el.parentNode.classList.remove('active');
-                                        el.parentNode.classList.remove('btn-success');
-                                        el.parentNode.classList.add('btn-info');
-                                    } else {
-                                        el.parentNode.classList.add('active');
-                                        el.parentNode.classList.add('btn-success');
-                                        el.parentNode.classList.remove('btn-info');
-                                    }
-                                });
-                            });
-                        });
-                        document.getElementsByName('representation').forEach(function (element, index) {
-                            document.getElementById("representation" + index).parentNode.addEventListener("click", function () {
-                                document.getElementsByName('representation').forEach(function (el, ind) {
-                                    if (ind !== index) {
-                                        el.parentNode.classList.remove('active');
-                                        el.parentNode.classList.remove('btn-success');
-                                        el.parentNode.classList.add('btn-info');
-                                    } else {
-                                        el.parentNode.classList.add('active');
-                                        el.parentNode.classList.add('btn-success');
-                                        el.parentNode.classList.remove('btn-info');
-                                    }
-                                });
-                            });
-                        });
-                        document.getElementsByName('worth').forEach(function (element, index) {
-                            document.getElementById("worth" + index).parentNode.addEventListener("click", function () {
-                                document.getElementsByName('worth').forEach(function (el, ind) {
-                                    if (ind !== index) {
-                                        el.parentNode.classList.remove('active');
-                                        el.parentNode.classList.remove('btn-success');
-                                        el.parentNode.classList.add('btn-info');
-                                    } else {
-                                        el.parentNode.classList.add('active');
-                                        el.parentNode.classList.add('btn-success');
-                                        el.parentNode.classList.remove('btn-info');
-                                    }
-                                });
-                            });
-                        });
-                        document.getElementsByName('efficiency').forEach(function (element, index) {
-                            document.getElementById("efficiency" + index).parentNode.addEventListener("click", function () {
-                                document.getElementsByName('efficiency').forEach(function (el, ind) {
-                                    if (ind !== index) {
-                                        el.parentNode.classList.remove('active');
-                                        el.parentNode.classList.remove('btn-success');
-                                        el.parentNode.classList.add('btn-info');
-                                    } else {
-                                        el.parentNode.classList.add('active');
-                                        el.parentNode.classList.add('btn-success');
-                                        el.parentNode.classList.remove('btn-info');
-                                    }
-                                });
-                            });
-                        });
+                        }
                     </script>
                 @else
                     <p>&nbsp;</p>
