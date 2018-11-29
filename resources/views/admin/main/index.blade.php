@@ -16,7 +16,6 @@
                         <th colspan="5">Оценки экспертов</th>
                         <th rowspan="2">Средняя оценка экспертов</th>
                         <th rowspan="2">Средняя оценка зрителей</th>
-                        <th rowspan="2">Результат</th>
                     </tr>
                     <tr>
                         <th>Новизна</th>
@@ -42,7 +41,6 @@
                             <td class="align-middle">{{ $report->getAverageStudy() }}</td>
                             <td class="align-middle">{{ $report->getAverageWorth() }}</td>
                             <td class="align-middle">{{ $report->getAverageRepresentation() }}</td>
-                            <td class="align-middle">{{ $report->getAverageEfficiency() }}</td>
                             <td class="align-middle">{{ $report->getAverageEfficiency() }}</td>
                             <td class="align-middle">{{ $report->getTotalAverage(0) }}</td>
                             <td class="align-middle">{{ $report->getAverageNovelty(1) }}</td>
