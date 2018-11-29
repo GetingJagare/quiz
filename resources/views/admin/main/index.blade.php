@@ -15,6 +15,7 @@
                         <th rowspan="2">Средняя оценка конкурсной комиссии</th>
                         <th colspan="5">Оценки экспертов</th>
                         <th rowspan="2">Средняя оценка экспертов</th>
+                        <th rowspan="2">Средняя оценка конкурсной комиссии и экспертов</th>
                         <th rowspan="2">Средняя оценка зрителей</th>
                     </tr>
                     <tr>
@@ -49,6 +50,7 @@
                             <td class="align-middle">{{ $report->getAverageRepresentation(1) }}</td>
                             <td class="align-middle">{{ $report->getAverageEfficiency(1) }}</td>
                             <td class="align-middle">{{ $report->getTotalAverage(1) }}</td>
+                            <td class="align-middle">{{ $report->getAllTotalAverage() }}</td>
                             <td class="align-middle">{{ $report->getAverageMark() }}</td>
                         </tr>
                     @empty

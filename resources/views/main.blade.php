@@ -11,13 +11,12 @@
                     <p>&nbsp;</p>
                     <form method="POST" action="{{ route('markExpert', $report->id) }}">
                         @csrf
-                        <p style="position:relative;">Новизна: <a href="#"
-                                                                  style="border: 1px solid #3490dc;border-radius: 50%;display: inline-block;width: 25px;height: 25px;position: absolute;top: 0;right: -40px;line-height: 25px;"
-                                                                  data-toggle="modal"
-                                                                  data-target="#noveltyModal"><span class="oi oi-info"
-                                                                                                    aria-hidden="true"></span></a>
-                        </p>
-                        <div class="form-group">
+                        <p>Новизна:</p>
+                        <div class="form-group" style="position:relative;">
+                            <a href="#"
+                               style="border: 1px solid #3490dc;border-radius: 50%;display: inline-block;width: 25px;height: 25px;position: absolute;top: 50%;left: -30px;line-height: 25px;transform: translateY(-50%);"
+                               data-toggle="modal"
+                               data-target="#noveltyModal">i</a>
                             @for($i = 0; $i <= 5; $i++)
                                 <div class="btn-group btn-group-lg btn-group-toggle" data-toggle="buttons">
                                     <label class="btn @if(old('novelty') && old('novelty') == $i) btn-success @else btn-info @endif">
@@ -33,13 +32,12 @@
                                     </span>
                             @endif
                         </div>
-                        <p style="position:relative;">Степень проработки: <a href="#"
-                                                                             style="border: 1px solid #3490dc;border-radius: 50%;display: inline-block;width: 25px;height: 25px;position: absolute;top: 0;right: -40px;line-height: 25px;"
-                                                                             data-toggle="modal"
-                                                                             data-target="#studyModal"><span
-                                        class="oi oi-info"
-                                        aria-hidden="true"></span></a></p>
-                        <div class="form-group">
+                        <p>Степень проработки:</p>
+                        <div class="form-group" style="position:relative;">
+                            <a href="#"
+                               style="border: 1px solid #3490dc;border-radius: 50%;display: inline-block;width: 25px;height: 25px;position: absolute;top: 50%;left: -30px;line-height: 25px;transform: translateY(-50%);"
+                               data-toggle="modal"
+                               data-target="#studyModal">i</a>
                             @for($i = 0; $i <= 5; $i++)
                                 <div class="btn-group btn-group-lg btn-group-toggle" data-toggle="buttons">
                                     <label class="btn @if(old('study') && old('study') == $i) btn-success @else btn-info @endif">
@@ -55,13 +53,12 @@
                                     </span>
                             @endif
                         </div>
-                        <p style="position:relative;">Практическая ценность и актуальность: <a href="#"
-                                                                                               style="border: 1px solid #3490dc;border-radius: 50%;display: inline-block;width: 25px;height: 25px;position: absolute;top: 0;right: -40px;line-height: 25px;"
-                                                                                               data-toggle="modal"
-                                                                                               data-target="#worthModal"><span
-                                        class="oi oi-info"
-                                        aria-hidden="true"></span></a></p>
-                        <div class="form-group">
+                        <p>Практическая ценность и актуальность:</p>
+                        <div class="form-group" style="position:relative;">
+                            <a href="#"
+                               style="border: 1px solid #3490dc;border-radius: 50%;display: inline-block;width: 25px;height: 25px;position: absolute;top: 50%;left: -30px;line-height: 25px;transform: translateY(-50%);"
+                               data-toggle="modal"
+                               data-target="#worthModal">i</a>
                             @for($i = 0; $i <= 5; $i++)
                                 <div class="btn-group btn-group-lg btn-group-toggle" data-toggle="buttons">
                                     <label class="btn @if(old('worth') && old('worth') == $i) btn-success @else btn-info @endif">
@@ -77,13 +74,12 @@
                                     </span>
                             @endif
                         </div>
-                        <p style="position:relative;">Представление доклада: <a href="#"
-                                                                                style="border: 1px solid #3490dc;border-radius: 50%;display: inline-block;width: 25px;height: 25px;position: absolute;top: 0;right: -40px;line-height: 25px;"
-                                                                                data-toggle="modal"
-                                                                                data-target="#representationModal"><span
-                                        class="oi oi-info"
-                                        aria-hidden="true"></span></a></p>
-                        <div class="form-group">
+                        <p>Представление доклада:</p>
+                        <div class="form-group" style="position:relative;">
+                            <a href="#"
+                               style="border: 1px solid #3490dc;border-radius: 50%;display: inline-block;width: 25px;height: 25px;position: absolute;top: 50%;left: -30px;line-height: 25px;transform: translateY(-50%);"
+                               data-toggle="modal"
+                               data-target="#representationModal">i</a>
                             @for($i = 0; $i <= 5; $i++)
                                 <div class="btn-group btn-group-lg btn-group-toggle" data-toggle="buttons">
                                     <label class="btn @if(old('representation') && old('representation') == $i) btn-success @else btn-info @endif">
@@ -100,13 +96,12 @@
                                     </span>
                             @endif
                         </div>
-                        <p style="position:relative;">Экономическая эффективность: <a href="#"
-                                                                                      style="border: 1px solid #3490dc;border-radius: 50%;display: inline-block;width: 25px;height: 25px;position: absolute;top: 0;right: -40px;line-height: 25px;"
-                                                                                      data-toggle="modal"
-                                                                                      data-target="#efficiencyModal"><span
-                                        class="oi oi-info"
-                                        aria-hidden="true"></span></a></p>
-                        <div class="form-group">
+                        <p>Экономическая эффективность:</p>
+                        <div class="form-group" style="position:relative;">
+                            <a href="#"
+                               style="border: 1px solid #3490dc;border-radius: 50%;display: inline-block;width: 25px;height: 25px;position: absolute;top: 50%;left: -30px;line-height: 25px;transform: translateY(-50%);"
+                               data-toggle="modal"
+                               data-target="#efficiencyModal">i</a>
                             @for($i = 0; $i <= 5; $i++)
                                 <div class="btn-group btn-group-lg btn-group-toggle" data-toggle="buttons">
                                     <label class="btn @if(old('efficiency') && old('efficiency') == $i) btn-success @else btn-info @endif">
