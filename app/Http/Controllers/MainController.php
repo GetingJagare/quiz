@@ -19,18 +19,14 @@ class MainController extends Controller
     {
         $user = \Auth::user();
 
-        if (Carbon::createFromFormat('Y-m-d', config('app.date'))->startOfDay() != Carbon::now()->startOfDay()) {
-            $report = null;
-        } else {
-            $now = \Carbon\Carbon::now();
-            $report = Report::where('from', '<=', $now->format('H:i:s'))
-                ->where('to', '>=', $now->format('H:i:s'))
-                ->whereActive(true)
-                ->first();
+        $now = \Carbon\Carbon::now();
+        $report = Report::where('from', '<=', $now)
+            ->where('to', '>=', $now)
+            ->whereActive(true)
+            ->first();
 
-            if ($report && ($report->hasMark($user) || $report->hasExpertMark($user))) {
-                $report = null;
-            }
+        if ($report && ($report->hasMark($user) || $report->hasExpertMark($user))) {
+            $report = null;
         }
 
         return view('main', [
@@ -44,10 +40,10 @@ class MainController extends Controller
     {
         $now = \Carbon\Carbon::now();
 
-        $report = Report::where('from', '<=', $now->format('H:i:s'))
-        ->where('to', '>=', $now->format('H:i:s'))
-        ->whereActive(true)
-        ->findOrFail($id);
+        $report = Report::where('from', '<=', $now)
+            ->where('to', '>=', $now)
+            ->whereActive(true)
+            ->findOrFail($id);
 
         $rules = [
             'mark' => 'required|in:0,1,2,3,4,5'
@@ -84,8 +80,8 @@ class MainController extends Controller
     {
         $now = \Carbon\Carbon::now();
 
-        $report = Report::where('from', '<=', $now->format('H:i:s'))
-            ->where('to', '>=', $now->format('H:i:s'))
+        $report = Report::where('from', '<=', $now)
+            ->where('to', '>=', $now)
             ->whereActive(true)
             ->findOrFail($id);
 

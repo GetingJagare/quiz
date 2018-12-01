@@ -31,8 +31,8 @@
                                 <td>{{ $report->reporter }}</td>
                                 <td>{{ $report->position }}</td>
                                 <td>{{ $report->filial }}</td>
-                                <td>{{ $report->from }}</td>
-                                <td>{{ $report->to }}</td>
+                                <td>{{ $report->from->format('H:i d.m.Y') }}</td>
+                                <td>{{ $report->to->format('H:i d.m.Y') }}</td>
                                 <td class="justify-content-center">
                                     <div class="btn-group btn-group-sm">
                                         <a href="{{ route('admin.report.show', ['id' => $report->id]) }}"

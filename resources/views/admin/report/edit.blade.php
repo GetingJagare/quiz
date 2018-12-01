@@ -33,7 +33,8 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="reporter" class="col-md-4 col-form-label text-md-right">ФИО докладчика</label>
+                                <label for="reporter" class="col-md-4 col-form-label text-md-right">ФИО
+                                    докладчика</label>
                                 <div class="col-md-6">
                                     <input id="reporter" type="text"
                                            class="form-control{{ $errors->has('reporter') ? ' is-invalid' : '' }}"
@@ -47,7 +48,8 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="position" class="col-md-4 col-form-label text-md-right">Должность докладчика</label>
+                                <label for="position" class="col-md-4 col-form-label text-md-right">Должность
+                                    докладчика</label>
                                 <div class="col-md-6">
                                     <input id="position" type="text"
                                            class="form-control{{ $errors->has('position') ? ' is-invalid' : '' }}"
@@ -77,9 +79,9 @@
                             <div class="form-group row">
                                 <label for="from" class="col-md-4 col-form-label text-md-right">С</label>
                                 <div class="col-md-6">
-                                    <input id="from" type="time"
+                                    <input id="from" type="datetime-local"
                                            class="form-control{{ $errors->has('from') ? ' is-invalid' : '' }}"
-                                           name="from" value="{{ old('from') ?? substr_replace($report->from ,"", -3) }}" required>
+                                           name="from" value="{{ old('from') ?? ($report->from ? $report->from->format('Y-m-d\TH:i') : '') }}" required>
                                     @if ($errors->has('from'))
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('from') }}</strong>
@@ -91,9 +93,9 @@
                             <div class="form-group row">
                                 <label for="to" class="col-md-4 col-form-label text-md-right">До</label>
                                 <div class="col-md-6">
-                                    <input id="to" type="time"
+                                    <input id="to" type="datetime-local"
                                            class="form-control{{ $errors->has('to') ? ' is-invalid' : '' }}"
-                                           name="to" value="{{ old('from') ?? substr_replace($report->to ,"", -3) }}" required>
+                                           name="to" value="{{ old('to') ?? ($report->to ? $report->to->format('Y-m-d\TH:i') : '') }}" required>
                                     @if ($errors->has('to'))
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('to') }}</strong>
