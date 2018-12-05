@@ -351,6 +351,17 @@
         @elseif($result)
             <div style="margin: 0 auto;">
                 <h1>Спасибо за оценку!</h1>
+                @if($resultMark)
+                    <p>
+                        @if($user->is_expert)
+                            <b>Ваша средняя оценка</b>
+                            : {{ number_format(($resultMark->novelty + $resultMark->study + $resultMark->worth + $resultMark->representation + $resultMark->efficiency) / 5, 1) }}
+                        @else
+                            <b>Ваша оценка</b>
+                            : {{ $resultMark->mark }}
+                        @endif
+                    </p>
+                @endif
                 {{--<p><a href="{{ route('result') }}">Посмотреть результаты</a></p>--}}
             </div>
         @else

@@ -25,13 +25,20 @@ class MainController extends Controller
             ->whereActive(true)
             ->first();
 
+        $resultMark = null;
+
         if ($report && ($report->hasMark($user) || $report->hasExpertMark($user))) {
+            if ($report->hasMark($user) || $report->hasExpertMark($user)) {
+                $resultMark = ($user->is_expert ? $report->getExpertMark($user) : $report->getMark($user));
+            }
+
             $report = null;
         }
 
         return view('main', [
             'result' => \Session::pull('result', false),
             'report' => $report,
+            'resultMark' => $resultMark,
             'user' => $user
         ]);
     }

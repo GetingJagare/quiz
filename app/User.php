@@ -67,7 +67,7 @@ class User extends Authenticatable
     ];
 
     protected $casts = [
-        'is_admin',
-        'is_expert'
+        'is_admin' => 'boolean',
+        'is_expert' => 'boolean'
     ];
 }

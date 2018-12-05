@@ -89,6 +89,19 @@ class Report extends Model
      * @param User $user
      * @return bool
      */
+    public function getMark(User $user)
+    {
+        if ($user->is_expert) {
+            return null;
+        }
+
+        return $this->marks()->whereUserId($user->id)->first();
+    }
+
+    /**
+     * @param User $user
+     * @return bool
+     */
     public function hasExpertMark(User $user)
     {
         if (!$user->is_expert) {
@@ -96,6 +109,19 @@ class Report extends Model
         }
 
         return (bool)$this->expertMarks()->whereUserId($user->id)->count();
+    }
+
+    /**
+     * @param User $user
+     * @return bool
+     */
+    public function getExpertMark(User $user)
+    {
+        if (!$user->is_expert) {
+            return null;
+        }
+
+        return $this->expertMarks()->whereUserId($user->id)->first();
     }
 
     /**
@@ -180,7 +206,7 @@ class Report extends Model
     public function getAllTotalAverage()
     {
         if ($this->hasExpertMarks() && $this->hasExpertMarks(1)) {
-            return number_format(((float)$this->getTotalAverage() + (float)$this->getTotalAverage(1)) / 2, 2);
+            return (float)$this->getTotalAverage() + (float)$this->getTotalAverage(1);
         } elseif ($this->hasExpertMarks()) {
             return $this->getTotalAverage();
         } elseif ($this->hasExpertMarks(1)) {
