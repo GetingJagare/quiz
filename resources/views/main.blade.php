@@ -117,7 +117,7 @@
                                     </span>
                             @endif
                         </div>
-                        <button class="btn btn-success">Оценить</button>
+                        <button class="btn btn-success" style="display:block;margin:0 auto;">Оценить</button>
                     </form>
                     <div class="modal fade" id="noveltyModal" tabindex="-1" role="dialog"
                          aria-labelledby="noveltyModalTitle" aria-hidden="true">
