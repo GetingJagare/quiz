@@ -12,21 +12,20 @@
                     <form method="POST" action="{{ route('markExpert', $report->id) }}">
                         @csrf
                         <p>Новизна:</p>
-                        <div class="form-group">
-                            <div class="btn-group btn-group-lg btn-group-toggle" data-toggle="buttons"
-                                 style="position:relative;">
-                                <a href="#"
-                                   style="border: 1px solid #3490dc;border-radius: 50%;display: inline-block;width: 25px;height: 25px;position: absolute;top: 50%;left: -30px;line-height: 25px;transform: translateY(-50%);"
-                                   data-toggle="modal"
-                                   data-target="#noveltyModal">i</a>
-                                @for($i = 0; $i <= 5; $i++)
+                        <div class="form-group" style="position:relative;display:inline-block;">
+                            <a href="#"
+                               style="border: 1px solid #3490dc;border-radius: 50%;display: inline-block;width: 25px;height: 25px;position: absolute;top: 50%;left: -30px;line-height: 25px;transform: translateY(-50%);"
+                               data-toggle="modal"
+                               data-target="#noveltyModal">i</a>
+                            @for($i = 0; $i <= 5; $i++)
+                                <div class="btn-group btn-group-lg btn-group-toggle" data-toggle="buttons">
                                     <label class="btn @if(old('novelty') && old('novelty') == $i) btn-success @else btn-info @endif">
                                         <input type="radio" name="novelty" id="novelty{{ $i }}" autocomplete="off"
                                                @if(old('novelty') && old('novelty') == $i) checked @endif
                                                value="{{ $i }}"> {{ $i }}
                                     </label>
-                                @endfor
-                            </div>
+                                </div>
+                            @endfor
                             @if ($errors->has('novelty'))
                                 <span class="invalid-feedback" role="alert" style="display: block;">
                                         <strong>{{ $errors->first('novelty') }}</strong>
@@ -34,21 +33,20 @@
                             @endif
                         </div>
                         <p>Степень проработки:</p>
-                        <div class="form-group">
-                            <div class="btn-group btn-group-lg btn-group-toggle" data-toggle="buttons"
-                                 style="position:relative;">
-                                <a href="#"
-                                   style="border: 1px solid #3490dc;border-radius: 50%;display: inline-block;width: 25px;height: 25px;position: absolute;top: 50%;left: -30px;line-height: 25px;transform: translateY(-50%);"
-                                   data-toggle="modal"
-                                   data-target="#studyModal">i</a>
-                                @for($i = 0; $i <= 5; $i++)
+                        <div class="form-group" style="position:relative;display:inline-block;">
+                            <a href="#"
+                               style="border: 1px solid #3490dc;border-radius: 50%;display: inline-block;width: 25px;height: 25px;position: absolute;top: 50%;left: -30px;line-height: 25px;transform: translateY(-50%);"
+                               data-toggle="modal"
+                               data-target="#studyModal">i</a>
+                            @for($i = 0; $i <= 5; $i++)
+                                <div class="btn-group btn-group-lg btn-group-toggle" data-toggle="buttons">
                                     <label class="btn @if(old('study') && old('study') == $i) btn-success @else btn-info @endif">
                                         <input type="radio" name="study" id="study{{ $i }}" autocomplete="off"
                                                @if(old('study') && old('study') == $i) checked @endif
                                                value="{{ $i }}"> {{ $i }}
                                     </label>
-                                @endfor
-                            </div>
+                                </div>
+                            @endfor
                             @if ($errors->has('study'))
                                 <span class="invalid-feedback" role="alert" style="display: block;">
                                         <strong>{{ $errors->first('study') }}</strong>
@@ -56,21 +54,20 @@
                             @endif
                         </div>
                         <p>Практическая ценность и актуальность:</p>
-                        <div class="form-group">
-                            <div class="btn-group btn-group-lg btn-group-toggle" data-toggle="buttons"
-                                 style="position:relative;">
-                                <a href="#"
-                                   style="border: 1px solid #3490dc;border-radius: 50%;display: inline-block;width: 25px;height: 25px;position: absolute;top: 50%;left: -30px;line-height: 25px;transform: translateY(-50%);"
-                                   data-toggle="modal"
-                                   data-target="#worthModal">i</a>
-                                @for($i = 0; $i <= 5; $i++)
+                        <div class="form-group" style="position:relative;display:inline-block;">
+                            <a href="#"
+                               style="border: 1px solid #3490dc;border-radius: 50%;display: inline-block;width: 25px;height: 25px;position: absolute;top: 50%;left: -30px;line-height: 25px;transform: translateY(-50%);"
+                               data-toggle="modal"
+                               data-target="#worthModal">i</a>
+                            @for($i = 0; $i <= 5; $i++)
+                                <div class="btn-group btn-group-lg btn-group-toggle" data-toggle="buttons">
                                     <label class="btn @if(old('worth') && old('worth') == $i) btn-success @else btn-info @endif">
                                         <input type="radio" name="worth" id="worth{{ $i }}" autocomplete="off"
                                                @if(old('worth') && old('worth') == $i) checked @endif
                                                value="{{ $i }}"> {{ $i }}
                                     </label>
-                                @endfor
-                            </div>
+                                </div>
+                            @endfor
                             @if ($errors->has('worth'))
                                 <span class="invalid-feedback" role="alert" style="display: block;">
                                         <strong>{{ $errors->first('worth') }}</strong>
@@ -78,22 +75,21 @@
                             @endif
                         </div>
                         <p>Представление доклада:</p>
-                        <div class="form-group">
-                            <div class="btn-group btn-group-lg btn-group-toggle" data-toggle="buttons"
-                                 style="position:relative;">
-                                @for($i = 0; $i <= 5; $i++)
-                                    <a href="#"
-                                       style="border: 1px solid #3490dc;border-radius: 50%;display: inline-block;width: 25px;height: 25px;position: absolute;top: 50%;left: -30px;line-height: 25px;transform: translateY(-50%);"
-                                       data-toggle="modal"
-                                       data-target="#representationModal">i</a>
+                        <div class="form-group" style="position:relative;display:inline-block;">
+                            <a href="#"
+                               style="border: 1px solid #3490dc;border-radius: 50%;display: inline-block;width: 25px;height: 25px;position: absolute;top: 50%;left: -30px;line-height: 25px;transform: translateY(-50%);"
+                               data-toggle="modal"
+                               data-target="#representationModal">i</a>
+                            @for($i = 0; $i <= 5; $i++)
+                                <div class="btn-group btn-group-lg btn-group-toggle" data-toggle="buttons">
                                     <label class="btn @if(old('representation') && old('representation') == $i) btn-success @else btn-info @endif">
                                         <input type="radio" name="representation" id="representation{{ $i }}"
                                                autocomplete="off"
                                                @if(old('representation') && old('representation') == $i) checked @endif
                                                value="{{ $i }}"> {{ $i }}
                                     </label>
-                                @endfor
-                            </div>
+                                </div>
+                            @endfor
                             @if ($errors->has('representation'))
                                 <span class="invalid-feedback" role="alert" style="display: block;">
                                         <strong>{{ $errors->first('representation') }}</strong>
@@ -101,21 +97,20 @@
                             @endif
                         </div>
                         <p>Экономическая эффективность:</p>
-                        <div class="form-group">
-                            <div class="btn-group btn-group-lg btn-group-toggle" data-toggle="buttons"
-                                 style="position:relative;">
-                                <a href="#"
-                                   style="border: 1px solid #3490dc;border-radius: 50%;display: inline-block;width: 25px;height: 25px;position: absolute;top: 50%;left: -30px;line-height: 25px;transform: translateY(-50%);"
-                                   data-toggle="modal"
-                                   data-target="#efficiencyModal">i</a>
-                                @for($i = 0; $i <= 5; $i++)
+                        <div class="form-group" style="position:relative;display:inline-block;">
+                            <a href="#"
+                               style="border: 1px solid #3490dc;border-radius: 50%;display: inline-block;width: 25px;height: 25px;position: absolute;top: 50%;left: -30px;line-height: 25px;transform: translateY(-50%);"
+                               data-toggle="modal"
+                               data-target="#efficiencyModal">i</a>
+                            @for($i = 0; $i <= 5; $i++)
+                                <div class="btn-group btn-group-lg btn-group-toggle" data-toggle="buttons">
                                     <label class="btn @if(old('efficiency') && old('efficiency') == $i) btn-success @else btn-info @endif">
                                         <input type="radio" name="efficiency" id="efficiency{{ $i }}" autocomplete="off"
                                                @if(old('efficiency') && old('efficiency') == $i) checked @endif
                                                value="{{ $i }}"> {{ $i }}
                                     </label>
-                                @endfor
-                            </div>
+                                </div>
+                            @endfor
                             @if ($errors->has('efficiency'))
                                 <span class="invalid-feedback" role="alert" style="display: block;">
                                         <strong>{{ $errors->first('efficiency') }}</strong>
