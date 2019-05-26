@@ -78,9 +78,9 @@ class Report extends Model
      */
     public function hasMark(User $user)
     {
-        if ($user->is_expert) {
+        /*if ($user->is_expert) {
             return false;
-        }
+        }*/
 
         return (bool)$this->marks()->whereUserId($user->id)->count();
     }
@@ -214,5 +214,29 @@ class Report extends Model
         } else {
             return "Нет проголосовавших";
         }
+    }
+
+    /**
+     * @return int
+     */
+    public function getAcceptedCount()
+    {
+        return $this->marks()->where('mark', '=', 1)->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function getParticallyAcceptedCount()
+    {
+        return $this->marks()->where('mark', '=', 0.5)->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function getDeclinedCount()
+    {
+        return $this->marks()->where('mark', '=', 0)->count();
     }
 }

@@ -7,6 +7,7 @@ use App\MarkExpert;
 use App\Report;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class MainController extends Controller
 {
@@ -17,64 +18,43 @@ class MainController extends Controller
      */
     public function index(Request $request)
     {
-        $user = \Auth::user();
-
-        $now = \Carbon\Carbon::now();
-        $report = Report::where('from', '<=', $now)
-            ->where('to', '>=', $now)
-            ->whereActive(true)
-            ->first();
-
-        $resultMark = null;
-
-        if ($report && ($report->hasMark($user) || $report->hasExpertMark($user))) {
-            if ($report->hasMark($user) || $report->hasExpertMark($user)) {
-                $resultMark = ($user->is_expert ? $report->getExpertMark($user) : $report->getMark($user));
-            }
-
-            $report = null;
-        }
-
-        return view('main', [
-            'result' => \Session::pull('result', false),
-            'report' => $report,
-            'resultMark' => $resultMark,
-            'user' => $user
-        ]);
+        return redirect(route('votePage'));
     }
 
-    public function mark(Request $request, $id)
+    public function mark(Request $request)
     {
         $now = \Carbon\Carbon::now();
 
         $report = Report::where('from', '<=', $now)
             ->where('to', '>=', $now)
-            ->whereActive(true)
-            ->findOrFail($id);
+            ->where('active', '=', 1, 'OR')
+            ->findOrFail($request->reportId);
 
-        $rules = [
+        if (empty($report)) {
+            return JsonResponse::create(['status' => -1]);
+        }
+
+        $user = \Auth::user();
+
+        if ($report->hasMark($user)) {
+            return JsonResponse::create(['status' => -2]);
+        }
+
+        /*$rules = [
             'mark' => 'required|in:0,1,2,3,4,5'
         ];
 
         $this->validate($request, $rules, [
             'required' => 'Выберите оценку'
-        ]);
-
-        $user = \Auth::user();
-
-        if ($user->is_expert || $report->hasMark($user)) {
-            return redirect()->route('main');
-        }
+        ]);*/
 
         $mark = new Mark();
         $mark->user_id = $user->id;
         $mark->report_id = $report->id;
-        $mark->mark = $request->get('mark');
+        $mark->mark = $request->mark;
         $mark->save();
 
-        \Session::put('result', true);
-
-        return redirect()->route('main');
+        return JsonResponse::create(['status' => 1]);
     }
 
     /**
@@ -138,5 +118,34 @@ class MainController extends Controller
         return view('result', [
             'reports' => $reports
         ]);
+    }
+
+    public function votePage()
+    {
+        $user = \Auth::user();
+
+        $now = \Carbon\Carbon::now();
+        $report = Report::where('from', '<=', $now)
+            ->where('to', '>=', $now)
+            ->where('active', '=', 1, 'OR')
+            ->first();
+
+        $resultMark = null;
+
+        if ($report && ($report->hasMark($user) || $report->hasExpertMark($user))) {
+            $resultMark = ($user->is_expert ? $report->getExpertMark($user) : $report->getMark($user));
+            $report = null;
+        }
+
+        return view('main', [
+            'result' => \Session::pull('result', false),
+            'report' => $report,
+            'resultMark' => $resultMark,
+            'user' => $user
+        ]);
+    }
+
+    public function vote(Request $request) {
+
     }
 }

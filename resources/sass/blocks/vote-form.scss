@@ -1,0 +1,13 @@
+.vote-form {
+  &__button {
+    width: 100%;
+
+    &-wrapper {
+      margin: 20px 0;
+    }
+  }
+
+  &__form {
+    margin-top: 40px;
+  }
+}
