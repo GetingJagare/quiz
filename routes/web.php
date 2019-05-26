@@ -24,6 +24,8 @@ Route::group([
     Route::get('/vote', 'MainController@votePage')->name('votePage');
     Route::post('/vote', 'MainController@vote');
 
+    Route::post('/signout', 'MainController@signout')->name('signout');
+
     Route::group([
         'middleware' => ['isAdmin'],
         'prefix' => 'admin',

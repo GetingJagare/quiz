@@ -145,7 +145,11 @@ class MainController extends Controller
         ]);
     }
 
-    public function vote(Request $request) {
+    public function signout(Request $request) {
+        $redirectLink = \Auth::user()->is_admin ? '/login' : '/signin';
 
+        \Auth::logout();
+
+        return redirect($redirectLink);
     }
 }

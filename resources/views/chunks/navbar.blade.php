@@ -1,8 +1,10 @@
 <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
     <div class="container">
+        @admin
         <a class="navbar-brand" href="{{ url('/admin') }}">
             {{ config('app.name', 'Laravel') }}
         </a>
+        @endadmin
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="{{ __('Toggle navigation') }}">
@@ -12,14 +14,17 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
+                @admin
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin.report.index') }}">Доклады</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin.expert.index') }}">Жюри</a>
                 </li>
+                @endadmin
                 <li class="nav-item">
-                    <a class="nav-link">Гостей зарегистрировано: {{ \App\User::whereIsExpert(false)->whereIsAdmin(false)->count() }}</a>
+                    <a class="nav-link">Гостей
+                        зарегистрировано: {{ \App\User::whereIsExpert(false)->whereIsAdmin(false)->count() }}</a>
                 </li>
             </ul>
 
@@ -43,13 +48,13 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('logout') }}"
+                            <a class="dropdown-item" href="{{ route('signout') }}"
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                            <form id="logout-form" action="{{ route('signout') }}" method="POST"
                                   style="display: none;">
                                 @csrf
                             </form>
