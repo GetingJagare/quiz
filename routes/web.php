@@ -22,7 +22,6 @@ Route::group([
     Route::post('/markExpert/{id}', 'MainController@markExpert')->name('markExpert');
 
     Route::get('/vote', 'MainController@votePage')->name('votePage');
-    Route::post('/vote', 'MainController@vote');
 
     Route::post('/signout', 'MainController@signout')->name('signout');
 
