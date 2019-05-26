@@ -14,7 +14,7 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        if (in_array($request->getRequestUri(), ['/', 'vote'])) {
+        if (in_array($request->getRequestUri(), ['/', '/vote'])) {
             return route('signin');
         }
 
