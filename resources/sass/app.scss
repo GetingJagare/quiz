@@ -24,5 +24,9 @@
   padding: .3rem .8rem;
 }
 
+body {
+  background-color: #ffffff;
+}
+
 @import "blocks/vote-form";
 @import "blocks/report-page";

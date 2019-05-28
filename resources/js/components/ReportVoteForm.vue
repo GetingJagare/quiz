@@ -13,7 +13,7 @@
                 <h3>"{{ report.name }}"</h3>
                 <vue-countdown :time="voteTime" class="vote-form__countdown" :auto-start="countDownAutostart">
                     <template slot-scope="props" class="vote-form__countdown-time">
-                        Осталось {{ props.seconds }} секунд до окончания голосования
+                        Осталось <span style="color: #ff0000;">{{ props.seconds }}</span> секунд до окончания голосования
                     </template>
                 </vue-countdown>
                 <form method="POST" class="vote-form__form">
@@ -103,9 +103,12 @@
                 chartData: {
                     data: [],
                     options: {
+                        height: 300,
+                        legend: 'none',
                         chart: {
                             title: 'Результаты голосования'
-                        }
+                        },
+                        gridLines: {}
                     }
                 }
             }
@@ -155,6 +158,7 @@
                 axios.get('/get-vote-results?id=' + this.report.id)
                     .then(response => {
                         this.chartData.data = response.data.results;
+                        this.chartData.options.gridLines.count = response.data.linesCount;
 
                         setTimeout(() => this.loading = false, 1500);
                     });

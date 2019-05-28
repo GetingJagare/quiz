@@ -1,5 +1,5 @@
 .vote-form {
-  width: 50%;
+  width: 70%;
 
   @media screen and (max-width: 1024px) {
     width: 100%;
@@ -24,6 +24,7 @@
 
   &__countdown {
     margin: 20px 0;
+    font-size: 22px;
 
     &-time {
       color: #dcdcdc;

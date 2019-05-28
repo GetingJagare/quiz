@@ -21,7 +21,7 @@ class MainController extends Controller
         if (\Auth::user()->is_admin) {
             return redirect(route('admin.index'));
         }
-        return redirect(route('votePage'));
+        return view('main');
     }
 
     public function mark(Request $request)
@@ -121,7 +121,7 @@ class MainController extends Controller
 
     public function votePage()
     {
-        return view('main');
+        return redirect(route('main'));
     }
 
     /**
@@ -141,7 +141,12 @@ class MainController extends Controller
 
         if ($report && $report->status == 2) {
             $timeDiff = strtotime($report->vote_to) - time();
-            $timeRemaining = $timeDiff > 0 ? $timeDiff * 1000 : 0;
+            if ($timeDiff > 0) {
+                $timeRemaining = $timeDiff * 1000;
+            } else {
+                $report->status = 3;
+                $report->save();
+            }
         }
 
         if ($report && $report->hasMark($user)) {
@@ -173,13 +178,17 @@ class MainController extends Controller
     {
         $report = Report::find($request->id);
 
+        $count = 2;
+        $results = [$report->getAcceptedCount(), $report->getParticallyAcceptedCount(), $report->getDeclinedCount()];
+
         return JsonResponse::create([
             'results' => [
-                ['Категории', 'Кол-во проголосовавших'],
-                ['Приняли', $report->getAcceptedCount()],
-                ['Приняли с доработками', $report->getParticallyAcceptedCount()],
-                ['Отклонили', $report->getDeclinedCount()]
-            ]
+                ['Категории', 'Кол-во проголосовавших', ['role' => 'style']],
+                ['Приняли', $results[0], '#133d56'],
+                ['Приняли с доработками', $results[1], '#133d56'],
+                ['Отклонили', $results, '#133d56']
+            ],
+            'linesCount' => ceil((max($results) - min($results)) / $count)
         ]);
     }
 }
