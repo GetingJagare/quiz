@@ -22,9 +22,12 @@
                 chartData: {
                     data: [],
                     options: {
+                        height: 300,
+                        legend: 'none',
                         chart: {
                             title: 'Результаты голосования'
-                        }
+                        },
+                        gridLines: {}
                     }
                 }
             }
@@ -45,6 +48,7 @@
                 axios.get('/get-vote-results?id=' + this.id)
                     .then(response => {
                         this.chartData.data = response.data.results;
+                        this.chartData.options.gridLines.count = response.data.linesCount;
 
                         setTimeout(() => {this.loading = false; setTimeout(this.getResults, 5000)}, 1500);
                     });
