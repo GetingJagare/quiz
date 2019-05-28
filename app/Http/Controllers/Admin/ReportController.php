@@ -48,16 +48,16 @@ class ReportController extends Controller
             'reporter' => 'required|string',
             'position' => 'required|string',
             'filial' => 'required|string',
-            'from' => 'required|date',
-            'to' => 'required|date',
+            //'from' => 'required|date',
+            //'to' => 'required|date',
         ];
 
         $this->validate($request, $rules);
 
-        $request->merge([
+        /*$request->merge([
             'from' => Carbon::createFromFormat('Y-m-d\TH:i', $request->get('from')),
             'to' => Carbon::createFromFormat('Y-m-d\TH:i', $request->get('to')),
-        ]);
+        ]);*/
 
         $report = new Report();
         $report->fill($request->all());

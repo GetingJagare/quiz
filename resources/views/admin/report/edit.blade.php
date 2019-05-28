@@ -81,7 +81,7 @@
                                 <div class="col-md-6">
                                     <input id="from" type="datetime-local"
                                            class="form-control{{ $errors->has('from') ? ' is-invalid' : '' }}"
-                                           name="from" value="{{ old('from') ?? ($report->from ? $report->from->format('Y-m-d\TH:i') : '') }}" required>
+                                           name="from" value="{{ old('from') ?? ($report->from ? $report->from->format('Y-m-d\TH:i') : '') }}">
                                     @if ($errors->has('from'))
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('from') }}</strong>
@@ -95,7 +95,7 @@
                                 <div class="col-md-6">
                                     <input id="to" type="datetime-local"
                                            class="form-control{{ $errors->has('to') ? ' is-invalid' : '' }}"
-                                           name="to" value="{{ old('to') ?? ($report->to ? $report->to->format('Y-m-d\TH:i') : '') }}" required>
+                                           name="to" value="{{ old('to') ?? ($report->to ? $report->to->format('Y-m-d\TH:i') : '') }}">
                                     @if ($errors->has('to'))
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('to') }}</strong>
