@@ -1,4 +1,15 @@
 .vote-form {
+  width: 50%;
+
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+  }
+
+  &__logo {
+    width: 100%;
+    margin: 20px 0;
+  }
+
   &__button {
     width: 100%;
 
@@ -9,5 +20,15 @@
 
   &__form {
     margin-top: 40px;
+  }
+
+  &__countdown {
+    margin: 20px 0;
+
+    &-time {
+      color: #dcdcdc;
+      font-weight: bold;
+      font-size: 16px;
+    }
   }
 }

@@ -39,13 +39,32 @@
                                            class="btn btn-success" role="button" target="_blank">
                                             <span class="oi oi-eye" title="Show report" aria-hidden="true"></span>
                                         </a>
-                                        <a href="{{ route('admin.report.toggle', ['id' => $report->id]) }}"
+                                        {{--<a href="{{ route('admin.report.toggle', ['id' => $report->id]) }}"
                                            class="btn {{ $report->active ? 'btn-success' : 'btn-danger' }}"
                                            role="button">
                                         <span class="oi {{ $report->active ? 'oi-check' : 'oi-x' }}"
                                               title="{{ $report->active ? 'Disable' : 'Enable' }} report"
                                               aria-hidden="true"></span>
-                                        </a>
+                                        </a>--}}
+
+                                        <div class="dropdown">
+                                            <button class="btn btn-success dropdown-toggle" type="button" style="border-radius: 0"
+                                                    id="statusMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                Статус
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="statusMenuButton">
+                                                <a class="dropdown-item{{ $report->status == -1 ? ' active' : '' }}" data-status="1"
+                                                   href="#" @click.prevent="setStatus($event, {{ $report->id }}, -1)">Не активен</a>
+                                                <a class="dropdown-item{{ $report->status == 1 ? ' active' : '' }}" data-status="1"
+                                                   href="#" @click.prevent="setStatus($event, {{ $report->id }}, 1)">Выступление</a>
+                                                <a class="dropdown-item{{ $report->status == 2 ? ' active' : '' }}" data-status="2"
+                                                   href="#" @click.prevent="setStatus($event, {{ $report->id }}, 2)">Голосование</a>
+                                                <a class="dropdown-item{{ $report->status == 3 ? ' active' : '' }}" data-status="3"
+                                                   href="#" @click.prevent="setStatus($event, {{ $report->id }}, 3)">Результаты голосования</a>
+                                            </div>
+                                        </div>
+
                                         <a href="{{ route('admin.report.edit', ['id' => $report->id]) }}"
                                            class="btn btn-warning" role="button">
                                             <span class="oi oi-pencil" title="Edit report" aria-hidden="true"></span>
@@ -90,6 +109,7 @@
                         @endforelse
                         </tbody>
                     </table>
+                    <vue-loading :is-full-page="loadingFullPage" :active.sync="loading" background-color="rgba(0, 0, 0, 0.1)" color="#dcdcdc"></vue-loading>
                 </div>
             </div>
         </div>

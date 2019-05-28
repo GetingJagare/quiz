@@ -18,6 +18,9 @@ class MainController extends Controller
      */
     public function index(Request $request)
     {
+        if (\Auth::user()->is_admin) {
+            return redirect(route('admin.index'));
+        }
         return redirect(route('votePage'));
     }
 
@@ -27,17 +30,13 @@ class MainController extends Controller
 
         $report = Report::where('from', '<=', $now)
             ->where('to', '>=', $now)
-            ->where('active', '=', 1, 'OR')
+            ->where('status', '>=', 1)
             ->findOrFail($request->reportId);
-
-        if (empty($report)) {
-            return JsonResponse::create(['status' => -1]);
-        }
 
         $user = \Auth::user();
 
         if ($report->hasMark($user)) {
-            return JsonResponse::create(['status' => -2]);
+            return JsonResponse::create(['voteStatus' => -1]);
         }
 
         /*$rules = [
@@ -54,7 +53,7 @@ class MainController extends Controller
         $mark->mark = $request->mark;
         $mark->save();
 
-        return JsonResponse::create(['status' => 1]);
+        return JsonResponse::create(['voteStatus' => 1]);
     }
 
     /**
@@ -122,34 +121,65 @@ class MainController extends Controller
 
     public function votePage()
     {
+        return view('main');
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function checkReports()
+    {
         $user = \Auth::user();
+        $voteStatus = 0;
+        $timeRemaining = 0;
 
         $now = \Carbon\Carbon::now();
         $report = Report::where('from', '<=', $now)
             ->where('to', '>=', $now)
-            ->where('active', '=', 1, 'OR')
+            ->where('status', '>=', 1)
             ->first();
 
-        $resultMark = null;
-
-        if ($report && ($report->hasMark($user) || $report->hasExpertMark($user))) {
-            $resultMark = ($user->is_expert ? $report->getExpertMark($user) : $report->getMark($user));
-            $report = null;
+        if ($report && $report->status == 2) {
+            $timeDiff = strtotime($report->vote_to) - time();
+            $timeRemaining = $timeDiff > 0 ? $timeDiff * 1000 : 0;
         }
 
-        return view('main', [
-            'result' => \Session::pull('result', false),
-            'report' => $report,
-            'resultMark' => $resultMark,
-            'user' => $user
-        ]);
+        if ($report && $report->hasMark($user)) {
+            //$report = null;
+            $voteStatus = -1;
+        }
+
+        return JsonResponse::create(['report' => $report ? $report->toArray() : null, 'voteStatus' => $voteStatus, 'time' => $timeRemaining]);
     }
 
-    public function signout(Request $request) {
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function signout(Request $request)
+    {
         $redirectLink = \Auth::user()->is_admin ? '/login' : '/signin';
 
         \Auth::logout();
 
         return redirect($redirectLink);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getVoteResults(Request $request)
+    {
+        $report = Report::find($request->id);
+
+        return JsonResponse::create([
+            'results' => [
+                ['Категории', 'Кол-во проголосовавших'],
+                ['Приняли', $report->getAcceptedCount()],
+                ['Приняли с доработками', $report->getParticallyAcceptedCount()],
+                ['Отклонили', $report->getDeclinedCount()]
+            ]
+        ]);
     }
 }

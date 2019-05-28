@@ -23,6 +23,9 @@ Route::group([
 
     Route::get('/vote', 'MainController@votePage')->name('votePage');
 
+    Route::get('/check-reports', 'MainController@checkReports');
+    Route::get('/get-vote-results', 'MainController@getVoteResults');
+
     Route::post('/signout', 'MainController@signout')->name('signout');
 
     Route::group([
@@ -41,6 +44,7 @@ Route::group([
         Route::get('/report/{id}/edit', 'ReportController@edit')->name('report.edit');
         Route::post('/report/{id}', 'ReportController@update')->name('report.update');
         Route::get('/report/{id}/delete', 'ReportController@delete')->name('report.delete');
+        Route::post('/report/change-status/{id}', 'ReportController@changeStatus')->name('report.status');
 
         Route::get('/expert', 'ExpertController@index')->name('expert.index');
         Route::get('/expert/create', 'ExpertController@create')->name('expert.create');

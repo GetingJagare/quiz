@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Report;
 use Carbon\Carbon;
+use Doctrine\DBAL\Types\DateTimeImmutableType;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\Catch_;
 
@@ -151,5 +153,24 @@ class ReportController extends Controller
         $report->save();
 
         return redirect()->route('admin.report.index');
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function changeStatus(Request $request)
+    {
+        $report = Report::find($request->id);
+        $report->status = $request->status;
+
+        // vote status
+        if ($request->status == 2) {
+            $report->vote_to = date('Y-m-d H:i:s', time() + 30);
+        }
+
+        $report->save();
+
+        return JsonResponse::create(['status' => 1]);
     }
 }

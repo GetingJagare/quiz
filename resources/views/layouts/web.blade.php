@@ -18,7 +18,6 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-@include('chunks.navbar')
 
 <div id="app">
     @yield('content')
