@@ -1,14 +1,17 @@
-@extends('layouts.web')
+@extends('layouts.app')
 
 @section('content')
     <div class="center-all">
-        <div style="margin: 0 auto;">
+        <div class="report-page">
             <div>
                 <h1>{{ $report->name }}</h1>
                 <h2>{{ $report->reporter }}</h2>
                 <h3>{{ $report->position }}, {{ $report->filial }}</h3>
                 <br/>
-                <h4>Оценка конкурсной комиссии <span style="font-size: 150%; font-weight: 700;">{{ $report->getTotalAverage() }}</span></h4>
+
+                <report-page id="{{ $report->id }}"></report-page>
+
+                {{--<h4>Оценка конкурсной комиссии <span style="font-size: 150%; font-weight: 700;">{{ $report->getTotalAverage() }}</span></h4>--}}
                 {{--<p><b>Новизна</b>: {{ $report->getAverageNovelty() }}</p>
                 <p><b>Степень проработки</b>: {{ $report->getAverageStudy() }}</p>
                 <p><b>Практическая ценность и актуальность</b>: {{ $report->getAverageWorth() }}</p>
@@ -31,9 +34,5 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        setTimeout(function () {
-            location.reload();
-        }, 5000);
-    </script>
+
 @endsection
