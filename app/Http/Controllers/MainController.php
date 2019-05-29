@@ -28,9 +28,9 @@ class MainController extends Controller
     {
         $now = \Carbon\Carbon::now();
 
-        $report = Report::where('from', '<=', $now)
+        $report = Report::/*where('from', '<=', $now)
             ->where('to', '>=', $now)
-            ->where('status', '>=', 1)
+            ->*/where('status', '>=', 1)
             ->findOrFail($request->reportId);
 
         $user = \Auth::user();
@@ -134,9 +134,9 @@ class MainController extends Controller
         $timeRemaining = 0;
 
         $now = \Carbon\Carbon::now();
-        $report = Report::where('from', '<=', $now)
+        $report = Report::/*where('from', '<=', $now)
             ->where('to', '>=', $now)
-            ->where('status', '>=', 1)
+            ->*/where('status', '>=', 1)
             ->first();
 
         if ($report && $report->status == 2) {
