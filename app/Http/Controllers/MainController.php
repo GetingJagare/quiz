@@ -186,7 +186,7 @@ class MainController extends Controller
                 ['Категории', 'Кол-во проголосовавших', ['role' => 'style']],
                 ['Приняли', $results[0], '#133d56'],
                 ['Приняли с доработками', $results[1], '#133d56'],
-                ['Отклонили', $results, '#133d56']
+                ['Отклонили', $results[2], '#133d56']
             ],
             'linesCount' => ceil((max($results) - min($results)) / $count)
         ]);
