@@ -8,48 +8,41 @@
                 <h3>Доклад "{{ report.name }}"</h3>
             </div>
 
-            <div v-else="report.status > 1">
+            <div v-else="report.status == 2">
                 <form method="POST" class="vote-form__form">
                     <div class="alert alert-success" v-if="voteStatus === 1" v-html="voteMessage"></div>
-                    <div v-else-if="voteTime > 0">
-                        <h1>Пожалуйста, поставьте свою оценку докладу</h1>
-                        <h3>"{{ report.name }}"</h3>
-                        <vue-countdown :time="voteTime" class="vote-form__countdown" :auto-start="countDownAutostart">
-                            <template slot-scope="props" class="vote-form__countdown-time">
-                                Осталось <span style="color: #ff0000;">{{ props.seconds }}</span> секунд до окончания
-                                голосования
-                            </template>
-                        </vue-countdown>
-                        <div v-if="userType <= 1">
-                            <div class="form-group vote-form__button-wrapper" v-for="(label, name) in voteQuestions">
-                                <div class="vote-form__button-title mb-2">{{ label }}</div>
-                                <div class="d-flex justify-content-center">
+                    <h1>Пожалуйста, поставьте свою оценку докладу</h1>
+                    <h3>"{{ report.name }}"</h3>
+
+                    <div v-if="userType <= 1">
+                        <div class="form-group vote-form__button-wrapper" v-for="(label, name) in voteQuestions">
+                            <div class="vote-form__button-title mb-2">{{ label }}</div>
+                            <div class="d-flex justify-content-center">
                                 <span class="vote-form__button text-center"
                                       v-for="num in [1, 2, 3, 4, 5]" @click="saveVote(name, num)"
                                       :class="{'active': voteData[name] === num}">
                                     {{ num }}
                                 </span>
-                                </div>
-                            </div>
-                            <div class="text-center">
-                                <button class="btn btn-success" v-bind:disabled="!hasAllVotes" @click.prevent="sendData">
-                                    Cохранить
-                                </button>
                             </div>
                         </div>
-                        <div v-else-if="userType === 2">
-                            <div class="d-flex justify-content-center mb-4 mt-3">
+                        <div class="text-center">
+                            <button class="btn btn-success" v-bind:disabled="!hasAllVotes" @click.prevent="sendData">
+                                Cохранить
+                            </button>
+                        </div>
+                    </div>
+                    <div v-else-if="userType === 2">
+                        <div class="d-flex justify-content-center mb-4 mt-3">
                                 <span class="vote-form__button text-center"
                                       v-for="num in [1, 2, 3, 4, 5]" @click="saveViewVote(num)"
                                       :class="{'active': voteViewResult === num}">
                                     {{ num }}
                                 </span>
-                            </div>
-                            <div class="text-center">
-                                <button class="btn btn-success" v-bind:disabled="voteViewResult < 1" @click.prevent="sendViewData">
-                                    Cохранить
-                                </button>
-                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-success" v-bind:disabled="voteViewResult < 1" @click.prevent="sendViewData">
+                                Cохранить
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -75,8 +68,6 @@
 
     import axios from 'axios';
 
-    import VueCountdown from '@chenfengyuan/vue-countdown';
-
     import {GChart} from 'vue-google-charts';
 
     axios.defaults.headers.common['X-CSRF-TOKEN'] = document.head.querySelector('[name="csrf-token"]').content;
@@ -88,7 +79,6 @@
         data() {
             return {
                 userType: -1,
-                countDownAutostart: false,
                 report: null,
                 voteStatus: 0,
                 voteMessage: '',
@@ -125,7 +115,7 @@
             }
         },
 
-        components: {VueLoading, VueCountdown, GChart},
+        components: {VueLoading, GChart},
 
         mounted() {
             this.checkActiveReports();

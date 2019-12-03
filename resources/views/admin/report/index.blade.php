@@ -10,7 +10,7 @@
                         <thead>
                         <tr>
                             <th width="50">ID</th>
-                            <th>ФИО докладчика, наимеование работы</th>
+                            <th>ФИО докладчика, наименование работы</th>
                             <th>Средняя оценка конкурсной комиссии</th>
                             <th>Место</th>
                             <th class="text-center" width="80">
@@ -33,13 +33,6 @@
                                            class="btn btn-success" role="button" target="_blank">
                                             <span class="oi oi-eye" title="Show report" aria-hidden="true"></span>
                                         </a>
-                                        {{--<a href="{{ route('admin.report.toggle', ['id' => $report['id]) }}"
-                                           class="btn {{ $report->active ? 'btn-success' : 'btn-danger' }}"
-                                           role="button">
-                                        <span class="oi {{ $report->active ? 'oi-check' : 'oi-x' }}"
-                                              title="{{ $report->active ? 'Disable' : 'Enable' }} report"
-                                              aria-hidden="true"></span>
-                                        </a>--}}
 
                                         <div class="dropdown">
                                             <button class="btn btn-success dropdown-toggle" type="button" style="border-radius: 0"

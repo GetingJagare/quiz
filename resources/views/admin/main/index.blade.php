@@ -45,7 +45,7 @@
                             <td class="align-middle">{{ $report->getAverageCountByType('efficiency', 1) ?: '-' }}</td>
                             <td class="align-middle">{{ $report->getAverageCountByUserType(1) ?: '-' }}</td>
                             <td class="align-middle">{{ $report->getAverageCountByUserType([0, 1]) ?: '-' }}</td>
-                            <td class="align-middle">{{ $report->getAverageMark() }}</td>
+                            <td class="align-middle">{{ $report->getAverageMark() ?: '-' }}</td>
                         </tr>
                     @empty
                         <tr>

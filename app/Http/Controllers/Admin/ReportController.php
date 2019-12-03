@@ -17,8 +17,7 @@ class ReportController extends Controller
      */
     public function index(Request $request)
     {
-        $reports = Report::orderBy('to')
-            ->get();
+        $reports = Report::orderByDesc('id')->get();
 
         $reportsData = [];
 
@@ -64,16 +63,9 @@ class ReportController extends Controller
             'reporter' => 'required|string',
             'position' => 'required|string',
             'filial' => 'required|string',
-            //'from' => 'required|date',
-            //'to' => 'required|date',
         ];
 
         $this->validate($request, $rules);
-
-        /*$request->merge([
-            'from' => Carbon::createFromFormat('Y-m-d\TH:i', $request->get('from')),
-            'to' => Carbon::createFromFormat('Y-m-d\TH:i', $request->get('to')),
-        ]);*/
 
         $report = new Report();
         $report->fill($request->all());
@@ -179,11 +171,6 @@ class ReportController extends Controller
     {
         $report = Report::find($request->id);
         $report->status = $request->status;
-
-        // vote status
-        if ($request->status == 2) {
-            $report->vote_to = date('Y-m-d H:i:s', time() + 180);
-        }
 
         $report->save();
 
