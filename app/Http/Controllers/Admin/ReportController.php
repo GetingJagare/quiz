@@ -20,8 +20,24 @@ class ReportController extends Controller
         $reports = Report::orderBy('to')
             ->get();
 
+        $reportsData = [];
+
+        foreach ($reports as $report) {
+            $reportsData[] = [
+                'id' => $report->id,
+                'name' => $report->name,
+                'reporter' => $report->reporter,
+                'avg_count' => $report->getAverageCountByUserType(0),
+                'status' => $report->status
+            ];
+        }
+
+        usort($reportsData, function ($first, $second) {
+           return $first['avg_count'] < $second['avg_count'] ? 1 : ($first['avg_count'] > $second['avg_count'] ? -1 : 0);
+        });
+
         return view('admin.report.index', [
-            'reports' => $reports
+            'reports' => $reportsData
         ]);
     }
 
@@ -166,7 +182,7 @@ class ReportController extends Controller
 
         // vote status
         if ($request->status == 2) {
-            $report->vote_to = date('Y-m-d H:i:s', time() + 30);
+            $report->vote_to = date('Y-m-d H:i:s', time() + 180);
         }
 
         $report->save();

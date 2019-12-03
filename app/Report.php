@@ -79,10 +79,6 @@ class Report extends Model
      */
     public function hasMark(User $user)
     {
-        /*if ($user->is_expert) {
-            return false;
-        }*/
-
         return (bool)$this->marks()->whereUserId($user->id)->count();
     }
 
@@ -130,7 +126,31 @@ class Report extends Model
      */
     public function getAverageMark()
     {
-        return $this->hasMarks() ? number_format($this->marks()->average('mark'), 2) : "Нет проголосовавших";
+        return $this->hasMarks() ? number_format($this->marks()->average('mark'), 2) : 0;
+    }
+
+    /**
+     * @param string $type
+     * @param integer $userType
+     * @return mixed
+     */
+    public function getAverageCountByType($type, $userType = null) {
+        $query = $this->expertMarks();
+
+        if (!is_null($userType)) {
+            $query->whereIn('expert_type', is_array($userType) ? $userType : [$userType]);
+        }
+
+        return round($query->average($type), 2);
+    }
+
+    public function getAverageCountByUserType($type) {
+        $novelty = $this->getAverageCountByType('novelty', $type);
+        $study = $this->getAverageCountByType('study', $type);
+        $worth = $this->getAverageCountByType('worth', $type);
+        $representation = $this->getAverageCountByType('representation', $type);
+        $efficiency = $this->getAverageCountByType('efficiency', $type);
+        return round(($novelty + $study + $worth + $representation + $efficiency) / 5, 2);
     }
 
     /**
@@ -138,7 +158,7 @@ class Report extends Model
      */
     public function getAverageNovelty($type = 0)
     {
-        return $this->hasExpertMarks($type) ? number_format($this->expertMarks()->whereExpertType($type)->average('novelty'), 2) : "Нет проголосовавших";
+        return $this->hasExpertMarks($type) ? number_format($this->expertMarks()->whereIn('expert_type', is_array($type) ? $type : [$type])->average('novelty'), 2) : 0;
     }
 
     /**
@@ -146,7 +166,7 @@ class Report extends Model
      */
     public function getAverageStudy($type = 0)
     {
-        return $this->hasExpertMarks($type) ? number_format($this->expertMarks()->whereExpertType($type)->average('study'), 2) : "Нет проголосовавших";
+        return $this->hasExpertMarks($type) ? number_format($this->expertMarks()->whereIn('expert_type', is_array($type) ? $type : [$type])->average('study'), 2) : 0;
     }
 
     /**
@@ -154,7 +174,7 @@ class Report extends Model
      */
     public function getAverageWorth($type = 0)
     {
-        return $this->hasExpertMarks($type) ? number_format($this->expertMarks()->whereExpertType($type)->average('worth'), 2) : "Нет проголосовавших";
+        return $this->hasExpertMarks($type) ? number_format($this->expertMarks()->whereIn('expert_type', is_array($type) ? $type : [$type])->average('worth'), 2) : 0;
     }
 
     /**
@@ -162,7 +182,7 @@ class Report extends Model
      */
     public function getAverageRepresentation($type = 0)
     {
-        return $this->hasExpertMarks($type) ? number_format($this->expertMarks()->whereExpertType($type)->average('representation'), 2) : "Нет проголосовавших";
+        return $this->hasExpertMarks($type) ? number_format($this->expertMarks()->whereIn('expert_type', is_array($type) ? $type : [$type])->average('representation'), 2) : 0;
     }
 
     /**
@@ -170,7 +190,7 @@ class Report extends Model
      */
     public function getAverageEfficiency($type = 0)
     {
-        return $this->hasExpertMarks($type) ? number_format($this->expertMarks()->whereExpertType($type)->average('efficiency'), 2) : "Нет проголосовавших";
+        return $this->hasExpertMarks($type) ? number_format($this->expertMarks()->whereIn('expert_type', is_array($type) ? $type : [$type])->average('efficiency'), 2) : 0;
     }
 
     /**
@@ -198,7 +218,7 @@ class Report extends Model
      */
     public function hasExpertMarks($type = 0)
     {
-        return (bool)$this->expertMarks()->whereExpertType($type)->count();
+        return (bool)$this->expertMarks()->whereIn('expert_type', is_array($type) ? $type : [$type])->count();
     }
 
     /**

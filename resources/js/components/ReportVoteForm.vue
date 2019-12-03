@@ -1,6 +1,6 @@
 <template>
     <div style="margin: 0 auto;" class="vote-form">
-        <img src="/img/mog_0529_logo.png" class="vote-form__logo" />
+        <img src="/img/mog_0529_logo.png" class="vote-form__logo"/>
 
         <div v-if="report">
             <div v-if="report.status === 1">
@@ -8,60 +8,63 @@
                 <h3>Доклад "{{ report.name }}"</h3>
             </div>
 
-            <div v-if="report.status === 2">
-                <h1>Пожалуйста, поставьте свою оценку докладу</h1>
-                <h3>"{{ report.name }}"</h3>
-                <vue-countdown :time="voteTime" class="vote-form__countdown" :auto-start="countDownAutostart">
-                    <template slot-scope="props" class="vote-form__countdown-time">
-                        Осталось <span style="color: #ff0000;">{{ props.seconds }}</span> секунд до окончания голосования
-                    </template>
-                </vue-countdown>
+            <div v-else>
                 <form method="POST" class="vote-form__form">
-                    <div class="alert alert-danger" v-if="voteStatus === -1">
-                        Вы проголосовали!
-                    </div>
-                    <div class="alert alert-success" v-if="voteStatus === 1">
-                        Спасибо за вашу оценку!
-                    </div>
-                    <div v-if="voteStatus === 0">
-                        <div class="form-group vote-form__button-wrapper" v-for="(btn, mark) in voteButtons" v-if="voteStatus === 0">
-                            <button class="btn vote-form__button" :class="[btn.color]" @click.prevent="vote(mark);">
-                                {{ btn.text }}
-                            </button>
+                    <div class="alert alert-success" v-if="voteStatus === 1" v-html="voteMessage"></div>
+                    <div v-else-if="voteTime > 0">
+                        <h1>Пожалуйста, поставьте свою оценку докладу</h1>
+                        <h3>"{{ report.name }}"</h3>
+                        <vue-countdown :time="voteTime" class="vote-form__countdown" :auto-start="countDownAutostart">
+                            <template slot-scope="props" class="vote-form__countdown-time">
+                                Осталось <span style="color: #ff0000;">{{ props.seconds }}</span> секунд до окончания
+                                голосования
+                            </template>
+                        </vue-countdown>
+                        <div v-if="userType <= 1">
+                            <div class="form-group vote-form__button-wrapper" v-for="(label, name) in voteQuestions">
+                                <div class="vote-form__button-title mb-2">{{ label }}</div>
+                                <div class="d-flex justify-content-center">
+                                <span class="vote-form__button text-center"
+                                      v-for="num in [1, 2, 3, 4, 5]" @click="saveVote(name, num)"
+                                      :class="{'active': voteData[name] === num}">
+                                    {{ num }}
+                                </span>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn btn-success" v-bind:disabled="!hasAllVotes" @click.prevent="sendData">
+                                    Cохранить
+                                </button>
+                            </div>
+                        </div>
+                        <div v-else-if="userType === 2">
+                            <div class="d-flex justify-content-center mb-4 mt-3">
+                                <span class="vote-form__button text-center"
+                                      v-for="num in [1, 2, 3, 4, 5]" @click="saveViewVote(num)"
+                                      :class="{'active': voteViewResult === num}">
+                                    {{ num }}
+                                </span>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn btn-success" v-bind:disabled="voteViewResult < 1" @click.prevent="sendViewData">
+                                    Cохранить
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </form>
-                <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" :class="{'show': showDialog}"
-                     :style="{display: showDialog ? 'block' : 'none'}">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="noveltyModalTitle">
-                                    Подтвердите, пожалуйста, своё действие
-                                </h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="showDialog = false;">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body text-left">
-                                Вы выбрали оценку "{{ voteData.mark >= 0 ? voteButtons[voteData.mark].text : '' }}"
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-success" @click="sendData">Подтвердить</button>
-                                <button type="button" class="btn btn-danger" @click="showDialog = false;">Отклонить</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <vue-loading :is-full-page="loadingFullPage" :active.sync="loading" background-color="rgba(0, 0, 0, 0.1)" color="#dcdcdc"></vue-loading>
+                <vue-loading :is-full-page="loadingFullPage" :active.sync="loading"
+                             background-color="rgba(0, 0, 0, 0.1)" color="#dcdcdc"></vue-loading>
             </div>
 
-            <div v-if="report.status === 3">
-                <vue-loading :is-full-page="loadingFullPage" :active.sync="loading" background-color="rgba(0, 0, 0, 0.1)" color="#dcdcdc"></vue-loading>
+            <!--<div v-if="report.status === 3">
+                <vue-loading :is-full-page="loadingFullPage" :active.sync="loading"
+                             background-color="rgba(0, 0, 0, 0.1)" color="#dcdcdc"></vue-loading>
 
-                <GChart type="ColumnChart" :options="chartData.options" :data="chartData.data" v-if="chartData.data.length"></GChart>
-            </div>
+                <GChart type="ColumnChart" :options="chartData.options" :data="chartData.data"
+                        v-if="chartData.data.length"></GChart>
+            </div>-->
         </div>
     </div>
 </template>
@@ -74,7 +77,7 @@
 
     import VueCountdown from '@chenfengyuan/vue-countdown';
 
-    import { GChart } from 'vue-google-charts';
+    import {GChart} from 'vue-google-charts';
 
     axios.defaults.headers.common['X-CSRF-TOKEN'] = document.head.querySelector('[name="csrf-token"]').content;
     axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -82,23 +85,31 @@
     export default {
         name: "ReportVoteForm",
 
-        data () {
+        data() {
             return {
+                userType: -1,
                 countDownAutostart: false,
                 report: null,
                 voteStatus: 0,
+                voteMessage: '',
                 voteTime: 0,
                 loading: false,
                 loadingFullPage: true,
                 showDialog: false,
                 voteData: {
-                    reportId: -1,
-                    mark: -1
+                    novelty: 0,
+                    study: 0,
+                    worth: 0,
+                    representation: 0,
+                    efficiency: 0
                 },
-                voteButtons: {
-                    '1': {text: 'Принять идею', color: 'btn-success'},
-                    '0.5': {text: 'Принять идею с условиями доработки', color: 'btn-warning'},
-                    '0': {text: 'Отклонить идею', color: 'btn-danger'},
+                voteViewResult: -1,
+                voteQuestions: {
+                    novelty: 'Новизна',
+                    study: 'Степень проработки',
+                    worth: 'Практическая ценность и актуальность',
+                    representation: 'Представление доклада',
+                    efficiency: 'Экономическая эффективность',
                 },
                 chartData: {
                     data: [],
@@ -116,43 +127,51 @@
 
         components: {VueLoading, VueCountdown, GChart},
 
-        mounted () {
+        mounted() {
             this.checkActiveReports();
         },
 
         methods: {
-            vote (mark) {
-                this.voteData.mark = +mark;
-
-                this.showDialog = true;
-            },
-
-            sendData () {
+            sendData() {
                 this.loading = true;
 
-                axios.post('/mark', this.voteData)
+                axios.post('/markExpert', this.voteData)
                     .then(response => {
                         this.voteStatus = response.data.voteStatus;
-
-                        this.showDialog = false;
-
                         this.loading = false;
+
+                        for (let name in this.voteData) {
+                            this.voteData[name] = 0;
+                        }
                     });
 
             },
 
-            checkActiveReports () {
+            sendViewData() {
+                this.loading = true;
+
+                axios.post('/mark', {mark: this.voteViewResult})
+                    .then(response => {
+                        this.voteStatus = response.data.voteStatus;
+                        this.loading = false;
+                        this.voteViewResult = -1;
+                    });
+            },
+
+            checkActiveReports() {
                 axios.get('/check-reports')
                     .then(response => {
-                       this.report = response.data.report;
-                       this.voteStatus = response.data.voteStatus;
-                       this.voteTime = response.data.time;
+                        this.report = response.data.report;
+                        this.voteStatus = response.data.voteStatus;
+                        this.voteMessage = response.data.voteMessage;
+                        this.voteTime = response.data.time;
+                        this.userType = response.data.userType;
 
-                       setTimeout(this.checkActiveReports, 1000);
+                        setTimeout(this.checkActiveReports, 1000);
                     });
             },
 
-            getResults () {
+            getResults() {
                 this.loading = true;
 
                 axios.get('/get-vote-results?id=' + this.report.id)
@@ -162,13 +181,32 @@
 
                         setTimeout(() => this.loading = false, 1500);
                     });
+            },
+            saveVote(name, num) {
+                this.voteData[name] = num;
+            },
+            saveViewVote(num) {
+                this.voteViewResult = num;
+            },
+        },
+
+        computed: {
+            hasAllVotes() {
+                for (let name in this.voteData) {
+                    if (this.voteData[name] === 0) {
+                        return false;
+                    }
+                }
+
+                return true;
             }
         },
+
         watch: {
             'report.status': function (newValue) {
-                if (newValue === 3) {
+                /*if (newValue === 3) {
                     this.getResults();
-                }
+                }*/
             },
 
             'report.name': function (reportName) {

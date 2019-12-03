@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Mark;
 use App\MarkExpert;
 use App\Report;
-use Carbon\Carbon;
+use App\User;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -26,26 +26,18 @@ class MainController extends Controller
 
     public function mark(Request $request)
     {
-        $now = \Carbon\Carbon::now();
+        $report = Report::where('status', '>=', 1)
+            ->first();
 
-        $report = Report::/*where('from', '<=', $now)
-            ->where('to', '>=', $now)
-            ->*/where('status', '>=', 1)
-            ->findOrFail($request->reportId);
+        if (!$report) {
+            return JsonResponse::create(['voteStatus' => 0]);
+        }
 
         $user = \Auth::user();
 
         if ($report->hasMark($user)) {
-            return JsonResponse::create(['voteStatus' => -1]);
+            return JsonResponse::create(['voteStatus' => 1]);
         }
-
-        /*$rules = [
-            'mark' => 'required|in:0,1,2,3,4,5'
-        ];
-
-        $this->validate($request, $rules, [
-            'required' => 'Выберите оценку'
-        ]);*/
 
         $mark = new Mark();
         $mark->user_id = $user->id;
@@ -58,18 +50,16 @@ class MainController extends Controller
 
     /**
      * @param Request $request
-     * @param $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse|JsonResponse
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function markExpert(Request $request, $id)
+    public function markExpert(Request $request)
     {
-        $now = \Carbon\Carbon::now();
+        $report = Report::whereActive(true)->where('status', '>=', 1)->first();
 
-        $report = Report::where('from', '<=', $now)
-            ->where('to', '>=', $now)
-            ->whereActive(true)
-            ->findOrFail($id);
+        if (!$report) {
+            return JsonResponse::create(['voteStatus' => 0]);
+        }
 
         $rules = [
             'novelty' => 'required|in:0,1,2,3,4,5',
@@ -85,10 +75,6 @@ class MainController extends Controller
 
         $user = \Auth::user();
 
-        if (!$user->is_expert || $report->hasExpertMark($user)) {
-            return redirect()->route('main');
-        }
-
         $mark = new MarkExpert();
         $mark->user_id = $user->id;
         $mark->report_id = $report->id;
@@ -100,9 +86,7 @@ class MainController extends Controller
         $mark->expert_type = $user->expert_type;
         $mark->save();
 
-        \Session::put('result', true);
-
-        return redirect()->route('main');
+        return JsonResponse::create(['voteStatus' => 1, 'voteMessage' => $this->getVoteMessage($user, $report)]);
     }
 
     /**
@@ -133,13 +117,20 @@ class MainController extends Controller
         $voteStatus = 0;
         $timeRemaining = 0;
 
-        $now = \Carbon\Carbon::now();
-        $report = Report::/*where('from', '<=', $now)
-            ->where('to', '>=', $now)
-            ->*/where('status', '>=', 1)
+        $report = Report::where('status', '>=', 1)
             ->first();
 
-        if ($report && $report->status == 2) {
+        if (!$report) {
+            return JsonResponse::create([
+                'report' => null,
+                'voteStatus' => 0,
+                'voteMessage' => '',
+                'time' => 0,
+                'userType' => $user->expert_type,
+            ]);
+        }
+
+        if ($report->status == 2) {
             $timeDiff = strtotime($report->vote_to) - time();
             if ($timeDiff > 0) {
                 $timeRemaining = $timeDiff * 1000;
@@ -149,12 +140,17 @@ class MainController extends Controller
             }
         }
 
-        if ($report && $report->hasMark($user)) {
-            //$report = null;
-            $voteStatus = -1;
+        if ($report->hasMark($user) || $report->hasExpertMark($user)) {
+            $voteStatus = 1;
         }
 
-        return JsonResponse::create(['report' => $report ? $report->toArray() : null, 'voteStatus' => $voteStatus, 'time' => $timeRemaining]);
+        return JsonResponse::create([
+            'report' => $report ? $report->toArray() : null,
+            'voteStatus' => $voteStatus,
+            'voteMessage' => $this->getVoteMessage($user, $report),
+            'time' => $timeRemaining,
+            'userType' => $user->expert_type,
+        ]);
     }
 
     /**
@@ -179,16 +175,40 @@ class MainController extends Controller
         $report = Report::find($request->id);
 
         $count = 2;
-        $results = [$report->getAcceptedCount(), $report->getParticallyAcceptedCount(), $report->getDeclinedCount()];
+        $results = [
+            $report->getAverageCountByType('novelty'),
+            $report->getAverageCountByType('study'),
+            $report->getAverageCountByType('worth'),
+            $report->getAverageCountByType('representation'),
+            $report->getAverageCountByType('efficiency')
+        ];
 
         return JsonResponse::create([
             'results' => [
-                ['Категории', 'Кол-во проголосовавших', ['role' => 'style']],
-                ['Приняли', $results[0], '#133d56'],
-                ['Приняли с доработками', $results[1], '#133d56'],
-                ['Отклонили', $results[2], '#133d56']
+                ['Категории', 'Средняя оценка', ['role' => 'style']],
+                ['Новизна', $results[0], '#133d56'],
+                ['Степень проработки', $results[1], '#133d56'],
+                ['Практическая ценность и актуальность', $results[2], '#133d56'],
+                ['Представление доклада', $results[3], '#133d56'],
+                ['Экономическая эффективность', $results[4], '#133d56'],
             ],
             'linesCount' => ceil((max($results) - min($results)) / $count)
         ]);
+    }
+
+    /**
+     * @param User $user
+     * @param Report $report
+     * @return string
+     */
+    private function getVoteMessage($user, $report) {
+        $averageVote = "";
+
+        // юзер - не зритель
+        if ($user->expert_type <= 1) {
+            $averageVote = "<br>Ваша средняя оценка: " . $user->getReportAverageCount($report->id);
+        }
+
+        return "Ваш голос принят.$averageVote";
     }
 }

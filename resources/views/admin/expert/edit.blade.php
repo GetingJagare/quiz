@@ -33,15 +33,30 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="expert_type" class="col-md-4 col-form-label text-md-right">Жюри или
-                                    эксперт</label>
+                                <label for="name" class="col-md-4 col-form-label text-md-right">Филиал</label>
+                                <div class="col-md-6">
+                                    <input id="name" type="text"
+                                           class="form-control{{ $errors->has('filial') ? ' is-invalid' : '' }}"
+                                           name="filial" value="{{ old('filial') ?? $expert->filial }}">
+                                    @if ($errors->has('filial'))
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('filial') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="expert_type" class="col-md-4 col-form-label text-md-right">
+                                    Тип голосующего
+                                </label>
                                 <div class="col-md-6">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="expert_type"
                                                id="expert_type0"
                                                value="0" {{ $expert->expert_type == 0 ? 'checked' : '' }}>
                                         <label class="form-check-label" for="expert_type0">
-                                            Жюри
+                                            Конкурсная комиссия
                                         </label>
                                     </div>
                                     <div class="form-check">
@@ -49,7 +64,15 @@
                                                id="expert_type1" {{ $expert->expert_type == 1 ? 'checked' : '' }}
                                                value="1">
                                         <label class="form-check-label" for="expert_type1">
-                                            Эксперт
+                                            Эксперты
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="expert_type"
+                                               id="expert_type2" {{ $expert->expert_type == 2 ? 'checked' : '' }}
+                                               value="2">
+                                        <label class="form-check-label" for="expert_type1">
+                                            Зрители
                                         </label>
                                     </div>
                                 </div>

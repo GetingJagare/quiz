@@ -45,8 +45,11 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    const EXPERT_TYPE_COM = 0;
-    const EXPERT_TYPE_EXP = 1;
+    const TYPES = [
+        'Конкурсная комиссия',
+        'Эксперты',
+        'Зрители',
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -70,4 +73,22 @@ class User extends Authenticatable
         'is_admin' => 'boolean',
         'is_expert' => 'boolean'
     ];
+
+    /**
+     * @param integer $reportId
+     *
+     * @return integer
+     */
+    public function getReportAverageCount($reportId) {
+        /** @var MarkExpert $markExpert */
+        $markExpert = MarkExpert::where(['report_id' => $reportId, 'user_id' => $this->id])->first();
+
+        if (!$markExpert) {
+            return 0;
+        }
+
+        $avgCount = ($markExpert->novelty + $markExpert->study + $markExpert->worth + $markExpert->representation + $markExpert->efficiency) / 5;
+
+        return round($avgCount, 2);
+    }
 }

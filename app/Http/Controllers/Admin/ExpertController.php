@@ -43,7 +43,7 @@ class ExpertController extends Controller
     {
         $rules = [
             'name' => 'required|string',
-            'expert_type' => 'required|integer|in:0,1'
+            'expert_type' => 'required|integer|in:0,1,2'
         ];
 
         $this->validate($request, $rules);
@@ -51,7 +51,7 @@ class ExpertController extends Controller
         $user = new User();
         $user->email = uniqid('email-', true);
         $user->password = bcrypt('password');
-        $user->filial = "";
+        $user->filial = $request->get('filial');
         $user->name = $request->get('name');
         $user->is_expert = true;
         $user->expert_type = $request->get('expert_type');
@@ -91,12 +91,13 @@ class ExpertController extends Controller
 
         $rules = [
             'name' => 'required|string',
-            'expert_type' => 'required|integer|in:0,1'
+            'expert_type' => 'required|integer|in:0,1,2'
         ];
 
         $this->validate($request, $rules);
 
         $expert->name = $request->get('name');
+        $expert->filial = $request->get('filial');
         $expert->expert_type = $request->get('expert_type');
         $expert->save();
 

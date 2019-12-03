@@ -19,7 +19,7 @@ Route::group([
     //Route::get('/result', 'MainController@result')->name('result');
 
     Route::post('/mark', 'MainController@mark')->name('mark');
-    Route::post('/markExpert/{id}', 'MainController@markExpert')->name('markExpert');
+    Route::post('/markExpert', 'MainController@markExpert')->name('markExpert');
 
     Route::get('/vote', 'MainController@votePage')->name('votePage');
 
