@@ -3,7 +3,7 @@
         <img src="/img/mog_0529_logo.png" class="vote-form__logo"/>
 
         <div v-if="report">
-            <div v-if="report.status === 1">
+            <div v-if="report.status == 1">
                 <h1>Выступление участника {{ report.reporter }}</h1>
                 <h3>Доклад "{{ report.name }}"</h3>
             </div>
