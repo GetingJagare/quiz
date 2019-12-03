@@ -26,7 +26,8 @@ class MainController extends Controller
 
     public function mark(Request $request)
     {
-        $report = Report::where('status', '>=', 1)
+        $report = Report::orderByDesc('id')
+            ->where('status', '>=', 1)
             ->first();
 
         if (!$report) {
@@ -45,7 +46,7 @@ class MainController extends Controller
         $mark->mark = $request->mark;
         $mark->save();
 
-        return JsonResponse::create(['voteStatus' => 1]);
+        return JsonResponse::create(['voteStatus' => 1, 'voteMessage' => $this->getVoteMessage($user, $report)]);
     }
 
     /**
@@ -55,10 +56,10 @@ class MainController extends Controller
      */
     public function markExpert(Request $request)
     {
-        $report = Report::whereActive(true)->where('status', '>=', 1)->first();
+        $report = Report::orderByDesc('id')->whereActive(true)->where('status', '>=', 1)->first();
 
         if (!$report) {
-            return JsonResponse::create(['voteStatus' => 0]);
+            return JsonResponse::create(['voteStatus' => 0, 'voteMessage' => '']);
         }
 
         $rules = [
@@ -117,7 +118,8 @@ class MainController extends Controller
         $voteStatus = 0;
         $timeRemaining = 0;
 
-        $report = Report::where('status', '>=', 1)
+        $report = Report::orderByDesc('id')
+            ->where('status', '>=', 1)
             ->first();
 
         if (!$report) {
@@ -205,8 +207,8 @@ class MainController extends Controller
         $averageVote = "";
 
         // юзер - не зритель
-        if ($user->expert_type <= 1) {
-            $averageVote = "<br>Ваша средняя оценка: " . $user->getReportAverageCount($report->id);
+        if ($user->expert_type <= 1 && ($avgCount = $user->getReportAverageCount($report->id)) > 0) {
+            $averageVote = "<br>Ваша средняя оценка: $avgCount";
         }
 
         return "Ваш голос принят.$averageVote";

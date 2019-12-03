@@ -8,7 +8,7 @@
                 <h3>Доклад "{{ report.name }}"</h3>
             </div>
 
-            <div v-else>
+            <div v-else="report.status > 1">
                 <form method="POST" class="vote-form__form">
                     <div class="alert alert-success" v-if="voteStatus === 1" v-html="voteMessage"></div>
                     <div v-else-if="voteTime > 0">
@@ -138,6 +138,7 @@
                 axios.post('/markExpert', this.voteData)
                     .then(response => {
                         this.voteStatus = response.data.voteStatus;
+                        this.voteMessage = response.data.voteMessage;
                         this.loading = false;
 
                         for (let name in this.voteData) {
@@ -153,6 +154,7 @@
                 axios.post('/mark', {mark: this.voteViewResult})
                     .then(response => {
                         this.voteStatus = response.data.voteStatus;
+                        this.voteMessage = response.data.voteMessage;
                         this.loading = false;
                         this.voteViewResult = -1;
                     });
