@@ -20,6 +20,7 @@ class MainController extends Controller
         foreach ($reports as $report) {
             $com_avg = $report->getAverageCountByUserType(0) ?: '-';
             $exp_avg = $report->getAverageCountByUserType(1) ?: '-';
+            $com_exp_sum = (is_numeric($com_avg) ? $com_avg : 0) + (is_numeric($exp_avg) ? $exp_avg : 0);
 
             $reportsData[] = [
                 'reporter' => $report->reporter,
@@ -36,7 +37,7 @@ class MainController extends Controller
                 'exp_representation' => $report->getAverageCountByType('representation', 1) ?: '-',
                 'exp_efficiency' => $report->getAverageCountByType('efficiency', 1) ?: '-',
                 'exp_avg' => $exp_avg,
-                'com_exp_sum' => (is_numeric($com_avg) ? $com_avg : 0) + (is_numeric($exp_avg) ? $exp_avg : 0),
+                'com_exp_sum' => $com_exp_sum > 0 ? $com_exp_sum : '-',
                 'view_avg' => $report->getAverageMark() ?: '-',
             ];
         }

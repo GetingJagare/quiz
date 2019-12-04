@@ -1,5 +1,5 @@
 <template>
-    <div style="margin: 0 auto;" class="vote-form">
+    <div class="vote-form">
         <img src="/img/mog_0529_logo.png" class="vote-form__logo"/>
 
         <div v-if="report">
@@ -41,7 +41,7 @@
                                 </span>
                             </div>
                             <div class="text-center">
-                                <button class="btn btn-success" v-bind:disabled="voteViewResult < 1" @click.prevent="sendViewData">
+                                <button class="btn btn-success" v-bind:disabled="voteViewResult < 1" @click.prevent="sendData">
                                     Cохранить
                                 </button>
                             </div>
@@ -126,8 +126,10 @@
             sendData() {
                 this.loading = true;
 
-                axios.post('/markExpert', this.voteData)
-                    .then(response => {
+                axios.post(
+                    this.userType <= 1 ? '/markExpert' : '/mark',
+                    this.userType <= 1 ? this.voteData : {mark: this.voteViewResult}
+                ).then(response => {
                         this.voteStatus = response.data.voteStatus;
                         this.voteMessage = response.data.voteMessage;
                         this.loading = false;
@@ -135,19 +137,6 @@
                         this.resetVoteData();
                     });
 
-            },
-
-            sendViewData() {
-                this.loading = true;
-
-                axios.post('/mark', {mark: this.voteViewResult})
-                    .then(response => {
-                        this.voteStatus = response.data.voteStatus;
-                        this.voteMessage = response.data.voteMessage;
-                        this.loading = false;
-
-                        this.resetVoteData();
-                    });
             },
 
             checkActiveReports() {

@@ -15,7 +15,7 @@
     <link href="/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css?v=1.0.1') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css?v=1.0.2') }}" rel="stylesheet">
 </head>
 <body>
 <div id="app">
@@ -27,6 +27,6 @@
 </div>
 
 <!-- Scripts -->
-<script src="{{ asset('js/admin.js?v=1.0.1') }}" defer></script>
+<script src="{{ asset('js/admin.js?v=1.0.2') }}" defer></script>
 </body>
 </html>
