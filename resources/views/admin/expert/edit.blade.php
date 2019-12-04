@@ -67,14 +67,6 @@
                                             Эксперты
                                         </label>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="expert_type"
-                                               id="expert_type2" {{ $expert->expert_type == 2 ? 'checked' : '' }}
-                                               value="2">
-                                        <label class="form-check-label" for="expert_type1">
-                                            Зрители
-                                        </label>
-                                    </div>
                                 </div>
                             </div>
 

@@ -11,38 +11,40 @@
             <div v-else="report.status == 2">
                 <form method="POST" class="vote-form__form">
                     <div class="alert alert-success" v-if="voteStatus === 1" v-html="voteMessage"></div>
-                    <h1>Пожалуйста, поставьте свою оценку докладу</h1>
-                    <h3>"{{ report.name }}"</h3>
+                    <div v-else>
+                        <h1>Пожалуйста, поставьте свою оценку докладу</h1>
+                        <h3>"{{ report.name }}"</h3>
 
-                    <div v-if="userType <= 1">
-                        <div class="form-group vote-form__button-wrapper" v-for="(label, name) in voteQuestions">
-                            <div class="vote-form__button-title mb-2">{{ label }}</div>
-                            <div class="d-flex justify-content-center">
+                        <div v-if="userType <= 1">
+                            <div class="form-group vote-form__button-wrapper" v-for="(label, name) in voteQuestions">
+                                <div class="vote-form__button-title mb-2">{{ label }}</div>
+                                <div class="d-flex justify-content-center">
                                 <span class="vote-form__button text-center"
                                       v-for="num in [1, 2, 3, 4, 5]" @click="saveVote(name, num)"
                                       :class="{'active': voteData[name] === num}">
                                     {{ num }}
                                 </span>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn btn-success" v-bind:disabled="!hasAllVotes" @click.prevent="sendData">
+                                    Cохранить
+                                </button>
                             </div>
                         </div>
-                        <div class="text-center">
-                            <button class="btn btn-success" v-bind:disabled="!hasAllVotes" @click.prevent="sendData">
-                                Cохранить
-                            </button>
-                        </div>
-                    </div>
-                    <div v-else-if="userType === 2">
-                        <div class="d-flex justify-content-center mb-4 mt-3">
+                        <div v-else-if="userType === 2">
+                            <div class="d-flex justify-content-center mb-4 mt-3">
                                 <span class="vote-form__button text-center"
                                       v-for="num in [1, 2, 3, 4, 5]" @click="saveViewVote(num)"
                                       :class="{'active': voteViewResult === num}">
                                     {{ num }}
                                 </span>
-                        </div>
-                        <div class="text-center">
-                            <button class="btn btn-success" v-bind:disabled="voteViewResult < 1" @click.prevent="sendViewData">
-                                Cохранить
-                            </button>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn btn-success" v-bind:disabled="voteViewResult < 1" @click.prevent="sendViewData">
+                                    Cохранить
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -131,9 +133,7 @@
                         this.voteMessage = response.data.voteMessage;
                         this.loading = false;
 
-                        for (let name in this.voteData) {
-                            this.voteData[name] = 0;
-                        }
+                        this.resetVoteData();
                     });
 
             },
@@ -146,13 +146,18 @@
                         this.voteStatus = response.data.voteStatus;
                         this.voteMessage = response.data.voteMessage;
                         this.loading = false;
-                        this.voteViewResult = -1;
+
+                        this.resetVoteData();
                     });
             },
 
             checkActiveReports() {
                 axios.get('/check-reports')
                     .then(response => {
+                        if (this.report && response.data.report && this.report.id != response.data.report.id) {
+                            this.resetVoteData();
+                        }
+
                         this.report = response.data.report;
                         this.voteStatus = response.data.voteStatus;
                         this.voteMessage = response.data.voteMessage;
@@ -180,6 +185,15 @@
             saveViewVote(num) {
                 this.voteViewResult = num;
             },
+            resetVoteData () {
+                if (this.userType <= 1) {
+                    for (let name in this.voteData) {
+                        this.voteData[name] = 0;
+                    }
+                } else {
+                    this.voteViewResult = 0;
+                }
+            }
         },
 
         computed: {

@@ -35,11 +35,12 @@ class SignInController extends Controller
         $user->password = bcrypt('password');
         $user->filial = $request->get('filial');
         $user->name = $request->get('name');
+        $user->expert_type = 2; // зрители
         $user->save();
 
         \Auth::login($user);
 
-        return redirect()->route('main');
+        return redirect()->route('votePage');
     }
 
     /**
