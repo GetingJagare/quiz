@@ -67,8 +67,8 @@ class ReportController extends Controller
         $rules = [
             'name' => 'required|string',
             'reporter' => 'required|string',
-            'position' => 'required|string',
-            'filial' => 'required|string',
+            //'position' => 'required|string',
+            //'filial' => 'required|string',
         ];
 
         $this->validate($request, $rules);

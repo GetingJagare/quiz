@@ -53,7 +53,7 @@
                                 <div class="col-md-6">
                                     <input id="position" type="text"
                                            class="form-control{{ $errors->has('position') ? ' is-invalid' : '' }}"
-                                           name="position" value="{{ old('position') ?? $report->position }}" required>
+                                           name="position" value="{{ old('position') ?? $report->position }}">
                                     @if ($errors->has('position'))
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('position') }}</strong>
@@ -67,7 +67,7 @@
                                 <div class="col-md-6">
                                     <input id="filial" type="text"
                                            class="form-control{{ $errors->has('filial') ? ' is-invalid' : '' }}"
-                                           name="filial" value="{{ old('filial') ?? $report->filial }}" required>
+                                           name="filial" value="{{ old('filial') ?? $report->filial }}">
                                     @if ($errors->has('filial'))
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('filial') }}</strong>
