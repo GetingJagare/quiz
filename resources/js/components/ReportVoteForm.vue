@@ -32,7 +32,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div v-else-if="userType === 2">
+                        <div v-else-if="userType == 2">
                             <div class="d-flex justify-content-center mb-4 mt-3">
                                 <span class="vote-form__button text-center"
                                       v-for="num in [1, 2, 3, 4, 5]" @click="saveViewVote(num)"
@@ -84,7 +84,6 @@
                 report: null,
                 voteStatus: 0,
                 voteMessage: '',
-                voteTime: 0,
                 loading: false,
                 loadingFullPage: true,
                 showDialog: false,
@@ -161,7 +160,6 @@
                         this.report = response.data.report;
                         this.voteStatus = response.data.voteStatus;
                         this.voteMessage = response.data.voteMessage;
-                        this.voteTime = response.data.time;
                         this.userType = response.data.userType;
 
                         setTimeout(this.checkActiveReports, 1000);

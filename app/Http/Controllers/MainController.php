@@ -127,7 +127,6 @@ class MainController extends Controller
                 'report' => null,
                 'voteStatus' => 0,
                 'voteMessage' => '',
-                'time' => 0,
                 'userType' => $user->expert_type,
             ]);
         }
@@ -150,7 +149,6 @@ class MainController extends Controller
             'report' => $report ? $report->toArray() : null,
             'voteStatus' => $voteStatus,
             'voteMessage' => $this->getVoteMessage($user, $report),
-            'time' => $timeRemaining,
             'userType' => $user->expert_type,
         ]);
     }
