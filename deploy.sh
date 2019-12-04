@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-composer install
+#composer install
 
-git fetch
-git merge origin master
+#git fetch
+#git merge origin master
 
 php artisan migrate
 
