@@ -31,21 +31,21 @@
                     <tbody>
                     @forelse($reports as $report)
                         <tr>
-                            <td class="align-middle">{{ $report->reporter }}<br/><b>{{ $report->name }}</b></td>
-                            <td class="align-middle">{{ $report->getAverageCountByType('novelty', 0) ?: '-' }}</td>
-                            <td class="align-middle">{{ $report->getAverageCountByType('study', 0) ?: '-' }}</td>
-                            <td class="align-middle">{{ $report->getAverageCountByType('worth', 0) ?: '-' }}</td>
-                            <td class="align-middle">{{ $report->getAverageCountByType('representation', 0) ?: '-' }}</td>
-                            <td class="align-middle">{{ $report->getAverageCountByType('efficiency', 0) ?: '-' }}</td>
-                            <td class="align-middle">{{ $report->getAverageCountByUserType(0) ?: '-' }}</td>
-                            <td class="align-middle">{{ $report->getAverageCountByType('novelty', 1) ?: '-' }}</td>
-                            <td class="align-middle">{{ $report->getAverageCountByType('study', 1) ?: '-' }}</td>
-                            <td class="align-middle">{{ $report->getAverageCountByType('worth', 1) ?: '-' }}</td>
-                            <td class="align-middle">{{ $report->getAverageCountByType('representation', 1) ?: '-' }}</td>
-                            <td class="align-middle">{{ $report->getAverageCountByType('efficiency', 1) ?: '-' }}</td>
-                            <td class="align-middle">{{ $report->getAverageCountByUserType(1) ?: '-' }}</td>
-                            <td class="align-middle">{{ $report->getAverageCountByUserType([0, 1]) ?: '-' }}</td>
-                            <td class="align-middle">{{ $report->getAverageMark() ?: '-' }}</td>
+                            <td class="align-middle">{{ $report['reporter'] }}<br/><b>{{ $report['name'] }}</b></td>
+                            <td class="align-middle">{{ $report['com_novelty'] }}</td>
+                            <td class="align-middle">{{ $report['com_study'] }}</td>
+                            <td class="align-middle">{{ $report['com_worth'] }}</td>
+                            <td class="align-middle">{{ $report['com_representation'] }}</td>
+                            <td class="align-middle">{{ $report['com_efficiency'] }}</td>
+                            <td class="align-middle">{{ $report['com_avg'] }}</td>
+                            <td class="align-middle">{{ $report['exp_novelty'] }}</td>
+                            <td class="align-middle">{{ $report['exp_study'] }}</td>
+                            <td class="align-middle">{{ $report['exp_worth'] }}</td>
+                            <td class="align-middle">{{ $report['exp_representation'] }}</td>
+                            <td class="align-middle">{{ $report['exp_efficiency'] }}</td>
+                            <td class="align-middle">{{ $report['exp_avg'] }}</td>
+                            <td class="align-middle">{{ $report['com_exp_sum'] }}</td>
+                            <td class="align-middle">{{ $report['view_avg'] }}</td>
                         </tr>
                     @empty
                         <tr>

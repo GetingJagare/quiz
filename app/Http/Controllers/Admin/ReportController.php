@@ -22,7 +22,7 @@ class ReportController extends Controller
         $reportsData = [];
 
         foreach ($reports as $report) {
-            $reportsData[] = [
+            $reportsData[$report->id] = [
                 'id' => $report->id,
                 'name' => $report->name,
                 'reporter' => $report->reporter,
@@ -31,9 +31,15 @@ class ReportController extends Controller
             ];
         }
 
-        usort($reportsData, function ($first, $second) {
+        $sortedReports = $reportsData;
+
+        usort($sortedReports, function ($first, $second) {
            return $first['avg_count'] < $second['avg_count'] ? 1 : ($first['avg_count'] > $second['avg_count'] ? -1 : 0);
         });
+
+        foreach ($reportsData as $id => &$report) {
+            $report['place'] = array_search($id, array_column($sortedReports, 'id')) + 1;
+        }
 
         return view('admin.report.index', [
             'reports' => $reportsData

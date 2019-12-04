@@ -21,12 +21,12 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @forelse($reports as $i => $report)
+                        @forelse($reports as $report)
                             <tr>
                                 <td>{{ $report['id'] }}</td>
                                 <td>{{ $report['name'] }}<br><b>{{ $report['reporter'] }}</b></td>
                                 <td>{{ $report['avg_count'] }}</td>
-                                <td>{{ $i + 1 }}</td>
+                                <td>{{ $report['place'] }}</td>
                                 <td class="justify-content-center">
                                     <div class="btn-group btn-group-sm">
                                         <a href="{{ route('admin.report.show', ['id' => $report['id']]) }}"
