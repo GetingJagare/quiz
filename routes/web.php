@@ -52,6 +52,9 @@ Route::group([
         Route::get('/expert/{id}', 'ExpertController@edit')->name('expert.edit');
         Route::post('/expert/{id}', 'ExpertController@update')->name('expert.update');
         Route::get('/expert/{id}/delete', 'ExpertController@delete')->name('expert.delete');
+
+        Route::get('/results', 'ResultsController@index')->name('results.index');
+        Route::get('/results/viewers', 'ResultsController@viewers')->name('results.viewers');
     });
 });
 

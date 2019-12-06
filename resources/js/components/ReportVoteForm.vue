@@ -27,7 +27,8 @@
                                 </div>
                             </div>
                             <div class="text-center">
-                                <button class="btn btn-success" v-bind:disabled="!hasAllVotes" @click.prevent="sendData">
+                                <button class="btn btn-success" v-bind:disabled="!hasAllVotes"
+                                        @click.prevent="sendData">
                                     Cохранить
                                 </button>
                             </div>
@@ -41,7 +42,8 @@
                                 </span>
                             </div>
                             <div class="text-center">
-                                <button class="btn btn-success" v-bind:disabled="voteViewResult < 1" @click.prevent="sendData">
+                                <button class="btn btn-success" v-bind:disabled="voteViewResult < 1"
+                                        @click.prevent="sendData">
                                     Cохранить
                                 </button>
                             </div>
@@ -130,12 +132,12 @@
                     this.userType <= 1 ? '/markExpert' : '/mark',
                     this.userType <= 1 ? this.voteData : {mark: this.voteViewResult}
                 ).then(response => {
-                        this.voteStatus = response.data.voteStatus;
-                        this.voteMessage = response.data.voteMessage;
-                        this.loading = false;
+                    this.voteStatus = response.data.voteStatus;
+                    this.voteMessage = response.data.voteMessage;
+                    this.loading = false;
 
-                        this.resetVoteData();
-                    });
+                    this.resetVoteData();
+                });
 
             },
 
@@ -151,6 +153,9 @@
                         this.voteMessage = response.data.voteMessage;
                         this.userType = response.data.userType;
 
+                        setTimeout(this.checkActiveReports, 1000);
+                    })
+                    .catch(() => {
                         setTimeout(this.checkActiveReports, 1000);
                     });
             },
@@ -172,7 +177,7 @@
             saveViewVote(num) {
                 this.voteViewResult = num;
             },
-            resetVoteData () {
+            resetVoteData() {
                 if (this.userType <= 1) {
                     for (let name in this.voteData) {
                         this.voteData[name] = 0;

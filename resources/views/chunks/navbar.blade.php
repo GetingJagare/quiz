@@ -21,6 +21,18 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin.expert.index') }}">Жюри</a>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbar-dropdown"
+                       role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Оценки
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbar-dropdown">
+                        <a class="dropdown-item" href="{{ route('admin.results.index') }}">
+                            Оценки конкурсной и экспертной комиссий
+                        </a>
+                        <a class="dropdown-item" href="{{ route('admin.results.viewers') }}">Оценки зрителей</a>
+                    </div>
+                </li>
                 @endadmin
                 <li class="nav-item">
                     <a class="nav-link">Гостей
