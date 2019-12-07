@@ -9,6 +9,7 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 import axios from 'axios';
 
 import ReportPage from './components/ReportPage';
+import ViewerResultPage from './components/ViewerResultPage';
 
 axios.defaults.headers.common['X-CSRF-TOKEN'] = document.head.querySelector('[name="csrf-token"]').content;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -47,5 +48,5 @@ const app = new Vue({
         }
     },
 
-    components: {VueLoading, ReportPage}
+    components: {VueLoading, ReportPage, ViewerResultPage}
 });

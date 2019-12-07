@@ -55,6 +55,9 @@ Route::group([
 
         Route::get('/results', 'ResultsController@index')->name('results.index');
         Route::get('/results/viewers', 'ResultsController@viewers')->name('results.viewers');
+
+        Route::get('/results/get-viewer-results', 'ResultsController@getViewerResults');
+        Route::get('/results/get-viewer-reports', 'ResultsController@getViewerReports');
     });
 });
 
