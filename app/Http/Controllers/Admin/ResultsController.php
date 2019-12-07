@@ -24,7 +24,7 @@ class ResultsController extends Controller
 
     public function getViewerResults()
     {
-        $viewers = User::where(['expert_type' => 2])->get();
+        $viewers = User::where(['expert_type' => 2, 'is_admin' => 0])->get();
 
         $viewersData = [];
 
@@ -66,7 +66,7 @@ class ResultsController extends Controller
         $expertsData = [];
 
         foreach (['com' => 0, 'exp' => 1] as $expertTypeName => $expertType) {
-            $experts = User::where(['expert_type' => $expertType])->get();
+            $experts = User::where(['expert_type' => $expertType, 'is_admin' => 0])->get();
 
             $expertsData[$expertTypeName]['count'] = count($experts);
 
@@ -110,7 +110,7 @@ class ResultsController extends Controller
                 'reporter' => $report->reporter,
                 'comAvgMark' => $comAvgMark,
                 'expAvgMark' => $expAvgMark,
-                'avgMarkSum' => $comAvgMark + $expAvgMark
+                'avgMarkSum' => round($comAvgMark + $expAvgMark, 2)
             ];
         }
 
