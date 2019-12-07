@@ -10,6 +10,7 @@ import axios from 'axios';
 
 import ReportPage from './components/ReportPage';
 import ViewerResultPage from './components/ViewerResultPage';
+import ExpertResultPage from './components/ExpertResultPage';
 
 axios.defaults.headers.common['X-CSRF-TOKEN'] = document.head.querySelector('[name="csrf-token"]').content;
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -48,5 +49,5 @@ const app = new Vue({
         }
     },
 
-    components: {VueLoading, ReportPage, ViewerResultPage}
+    components: {VueLoading, ReportPage, ViewerResultPage, ExpertResultPage}
 });

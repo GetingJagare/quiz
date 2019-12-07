@@ -2,9 +2,10 @@
 
 @section ('content')
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="table-responsive">
+                <expert-result-page />
             </div>
         </div>
     </div>

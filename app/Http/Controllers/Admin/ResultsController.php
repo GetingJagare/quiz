@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Mark;
+use App\MarkExpert;
 use App\Report;
 use App\User;
 use Illuminate\Http\JsonResponse;
@@ -54,6 +55,62 @@ class ResultsController extends Controller
                 'name' => $report->name,
                 'reporter' => $report->reporter,
                 'avgMark' => $report->getAverageMark()
+            ];
+        }
+
+        return JsonResponse::create(['reports' => $reportsData]);
+    }
+
+    public function getExpertResults()
+    {
+        $expertsData = [];
+
+        foreach (['com' => 0, 'exp' => 1] as $expertTypeName => $expertType) {
+            $experts = User::where(['expert_type' => $expertType])->get();
+
+            $expertsData[$expertTypeName]['count'] = count($experts);
+
+            foreach ($experts as $expert) {
+
+                $expertsData[$expertTypeName]['experts'][$expert->id] = [
+                    'name' => $expert->name
+                ];
+
+                /** @var MarkExpert $expertMark */
+                foreach ($expert->expertMarks as $expertMark) {
+                    $expertsData[$expertTypeName]['experts'][$expert->id]['marks'][$expertMark->report_id] = [
+                        'novelty' => $expertMark->novelty,
+                        'study' => $expertMark->study,
+                        'worth' => $expertMark->worth,
+                        'representation' => $expertMark->representation,
+                        'efficiency' => $expertMark->efficiency,
+                    ];
+                }
+
+            }
+
+        }
+
+        return JsonResponse::create(['experts' => $expertsData]);
+    }
+
+    public function getExpertReports()
+    {
+        $reports = Report::all();
+
+        $reportsData = [];
+
+        foreach ($reports as $report) {
+            $comAvgMark = $report->getAverageCountByUserType(0);
+            $expAvgMark = $report->getAverageCountByUserType(1);
+
+            $reportsData[] = [
+                'id' => $report->id,
+                'name' => $report->name,
+                'reporter' => $report->reporter,
+                'comAvgMark' => $comAvgMark,
+                'expAvgMark' => $expAvgMark,
+                'avgMarkSum' => $comAvgMark + $expAvgMark
             ];
         }
 

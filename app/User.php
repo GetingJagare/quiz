@@ -92,7 +92,12 @@ class User extends Authenticatable
         return round($avgCount, 2);
     }
 
-    public function marks() {
+    public function marks()
+    {
         return $this->hasMany('App\Mark');
+    }
+
+    public function expertMarks() {
+        return $this->hasMany('App\MarkExpert');
     }
 }

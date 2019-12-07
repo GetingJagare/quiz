@@ -1,9 +1,3 @@
-<?php
-/**
- * @var array $reports
- */
-?>
-
 @extends ('layouts.app')
 
 @section ('content')
